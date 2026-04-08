@@ -1,863 +1,2453 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" style="background: #151521">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="dark">
-
-    <!-- Critical CSS - Load immediately to prevent white flash -->
+    <title>MJKKids</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        html, body {
-            background: #151521 !important;
-            color: #ffffff !important;
-            margin: 0;
-            padding: 0;
+        :root {
+            --ninjago-red: #c90000;
+            --ninjago-dark: #580000;
+            --ninjago-yellow: #ffcc00;
+            --ninjago-green: #00aa00;
+            --text-white: #ffffff;
+            --bg-black: #0a0a0a;
+            --bg-dark-red: #1a0505;
+            --space-blue: #0066cc;
+            --wikix-blue: #0066cc;
+            --wikix-dark: #003d7a;
+            --minecraft-green: #5cb85c;
+            --minecraft-dark: #3d8b3d;
+            --gta-orange: #ff6600;
+            --gta-dark: #cc5200;
+        }
+        
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            overflow-x: hidden;
+        }
+        
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+
+        /* SERIES SELECTION PAGE */
+        .series-selection-page {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #001133 0%, #000820 50%, #000515 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Stars Background */
+        .stars-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Header */
+        .series-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+        }
+
+        .series-logo {
+            font-family: 'Bangers', cursive;
+            font-size: 2.5rem;
+            color: var(--text-white);
+            cursor: pointer;
+        }
+
+        .series-logo span {
+            color: var(--ninjago-yellow);
+        }
+
+        .sound-toggle {
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .sound-toggle:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Main Carousel */
+        .main-carousel {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 100px auto 40px auto;
+            padding: 0 80px;
+            z-index: 10;
+        }
+
+        .carousel-container {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .carousel-slide {
+            display: none;
+            position: relative;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #c90000 0%, #580000 100%);
+        }
+
+        .carousel-slide.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .carousel-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .carousel-title {
+            font-family: 'Bangers', cursive;
+            font-size: 4rem;
+            color: var(--text-white);
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 0 #000;
+            z-index: 10;
+        }
+
+        .carousel-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        .carousel-image {
+            max-height: 300px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+        }
+
+        .carousel-btn {
+            padding: 15px 40px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-family: 'Bangers', cursive;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+
+        .carousel-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 204, 0, 0.4);
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 102, 204, 0.8);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #fff;
+            z-index: 100;
+            transition: background 0.3s;
+        }
+
+        .carousel-nav:hover {
+            background: rgba(0, 102, 204, 1);
+        }
+
+        .carousel-nav.prev {
+            left: 20px;
+        }
+
+        .carousel-nav.next {
+            right: 20px;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .indicator.active {
+            background: var(--ninjago-yellow);
+        }
+
+        /* Series Grid */
+        .series-grid-section {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .series-grid-title {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--text-white);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .series-grid {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px 10px;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+
+        .series-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .series-card {
+            flex: 0 0 150px;
+            height: 220px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            background: #1a1a2e;
+            border: 2px solid transparent;
+        }
+
+        .series-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 102, 204, 0.4);
+            border-color: var(--space-blue);
+            z-index: 10;
+        }
+
+        .series-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .series-card-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+            padding: 15px;
+            text-align: center;
+        }
+
+        .series-card-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .series-card-name {
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            color: var(--text-white);
+            text-transform: uppercase;
+        }
+
+        .series-card-arrow {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 102, 204, 0.8);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #fff;
+            font-size: 1.2rem;
+            z-index: 20;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav-bar {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.95);
+            border-radius: 50px;
+            padding: 15px 40px;
+            display: flex;
+            gap: 30px;
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .nav-icon {
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .nav-icon:hover, .nav-icon.active {
+            color: var(--space-blue);
+            transform: scale(1.2);
+        }
+
+        /* Legal Stuff */
+        .legal-stuff {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .legal-stuff:hover {
+            color: var(--text-white);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .carousel-title {
+                font-size: 2.5rem;
+            }
+            
+            .series-card {
+                flex: 0 0 120px;
+                height: 180px;
+            }
+            
+            .main-carousel {
+                padding: 0 60px;
+            }
+        }
+
+        /* Other Pages */
+        .ninjago-page, .minecraft-page, .wikix-page, .gta-page, .minecraft-super-szkola-page, .gta-prawdziwe-zycie-page {
+            display: none;
+            background-color: var(--bg-black);
+        }
+
+        .ninjago-page.active, .minecraft-page.active, .wikix-page.active, .gta-page.active, .minecraft-super-szkola-page.active, .gta-prawdziwe-zycie-page.active {
+            display: block;
+        }
+
+        /* NINJAGO PAGE STYLES */
+        .ninjago-page {
+            background: linear-gradient(180deg, var(--ninjago-red) 0%, var(--bg-dark-red) 50%, #000 100%);
+            min-height: 100vh;
+        }
+
+        .ninjago-page-header {
+            background: linear-gradient(180deg, var(--ninjago-red) 0%, var(--ninjago-dark) 100%);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .ninjago-page-logo {
+            font-family: 'Bangers', cursive;
+            font-size: 5rem;
+            color: var(--text-white);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 3px 3px 0 #000;
+            margin-bottom: 20px;
+        }
+
+        .ninjago-section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .ninjago-title {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            color: var(--ninjago-yellow);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .video-container {
+            max-width: 900px;
+            margin: 30px auto;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid var(--ninjago-yellow);
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a0505 0%, #0a0202 100%);
+            cursor: pointer;
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: var(--ninjago-yellow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #000;
+        }
+
+        .countdown-container {
+            background: rgba(0,0,0,0.8);
+            border: 3px solid var(--ninjago-yellow);
+            border-radius: 15px;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .countdown-title {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--ninjago-yellow);
+            margin-bottom: 30px;
+        }
+
+        .countdown-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-box {
+            background: var(--ninjago-red);
+            padding: 20px 30px;
+            border-radius: 10px;
+            min-width: 100px;
+        }
+
+        .countdown-number {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            color: var(--ninjago-yellow);
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .posters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .poster-item {
+            aspect-ratio: 2/3;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid var(--ninjago-yellow);
+            position: relative;
+        }
+
+        .poster-download-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            padding: 15px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        /* WIKIX PAGE STYLES - UPDATED */
+        .wikix-page {
+            background: linear-gradient(180deg, #000 0%, #001133 100%);
+            min-height: 100vh;
+        }
+
+        .wikix-page-header {
+            background: linear-gradient(180deg, var(--wikix-blue) 0%, var(--wikix-dark) 100%);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .wikix-page-logo {
+            font-family: 'Bangers', cursive;
+            font-size: 5rem;
+            color: var(--text-white);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 3px 3px 0 #000;
+            margin-bottom: 20px;
+        }
+
+        .wikix-section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .wikix-title {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            color: var(--ninjago-yellow);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .wikix-video-container {
+            max-width: 900px;
+            margin: 30px auto;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid var(--ninjago-yellow);
+        }
+
+        .wikix-video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #001a33 0%, #000d1a 100%);
+            cursor: pointer;
+        }
+
+        .wikix-play-button {
+            width: 80px;
+            height: 80px;
+            background: var(--ninjago-yellow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #000;
+        }
+
+        /* NEW COUNTDOWN STYLE FOR WIKIX */
+        .wikix-new-season-container {
+            background: #000;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .wikix-new-season-title {
+            font-family: 'Bangers', cursive;
+            font-size: 3.5rem;
+            color: var(--ninjago-yellow);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .wikix-new-season-subtitle {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: #fff;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        /* BANNER STYLE FOR WIKIX */
+        .wikix-banner {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 40px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 3px solid var(--ninjago-yellow);
+            position: relative;
+        }
+
+        .wikix-banner-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #0066cc 0%, #003d7a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .wikix-banner-text {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .wikix-banner-main {
+            font-family: 'Bangers', cursive;
+            font-size: 4rem;
+            color: var(--ninjago-yellow);
+            text-transform: uppercase;
+            text-shadow: 3px 3px 0 #000;
+            margin-bottom: 10px;
+        }
+
+        .wikix-banner-sub {
+            font-family: 'Bangers', cursive;
+            font-size: 1.8rem;
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .wikix-countdown-box-new {
+            background: #000;
+            border: 3px solid var(--ninjago-yellow);
+            border-radius: 15px;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .wikix-countdown-title-new {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--ninjago-yellow);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .wikix-countdown-boxes-new {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .wikix-countdown-box-new {
+            background: var(--wikix-blue);
+            padding: 20px 25px;
+            border-radius: 10px;
+            min-width: 90px;
+        }
+
+        .wikix-countdown-number-new {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            color: var(--ninjago-yellow);
+            display: block;
+            line-height: 1;
+        }
+
+        .wikix-countdown-label-new {
+            font-size: 0.9rem;
+            color: #fff;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .wikix-posters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .wikix-poster-item {
+            aspect-ratio: 2/3;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid var(--ninjago-yellow);
+            position: relative;
+        }
+
+        .wikix-poster-download-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .wikix-back-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            padding: 15px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .btn-wikix-premiere-info {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-wikix-premiere-info:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 204, 0, 0.4);
+        }
+
+        /* MINECRAFT SUPER SZKOŁA PAGE STYLES */
+        .minecraft-super-szkola-page {
+            background: linear-gradient(180deg, var(--minecraft-green) 0%, var(--minecraft-dark) 50%, #000 100%);
+            min-height: 100vh;
+        }
+
+        .minecraft-super-szkola-header {
+            background: linear-gradient(180deg, var(--minecraft-green) 0%, var(--minecraft-dark) 100%);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .minecraft-super-szkola-logo {
+            font-family: 'Bangers', cursive;
+            font-size: 5rem;
+            color: var(--text-white);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 3px 3px 0 #000;
+            margin-bottom: 20px;
+        }
+
+        .minecraft-super-szkola-section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .minecraft-super-szkola-title {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            color: var(--ninjago-yellow);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .minecraft-super-szkola-video-container {
+            max-width: 900px;
+            margin: 30px auto;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid var(--ninjago-yellow);
+        }
+
+        .minecraft-super-szkola-video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a3300 0%, #0d1a00 100%);
+            cursor: pointer;
+        }
+
+        .minecraft-super-szkola-play-button {
+            width: 80px;
+            height: 80px;
+            background: var(--ninjago-yellow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #000;
+        }
+
+        .minecraft-super-szkola-countdown-container {
+            background: rgba(0,0,0,0.8);
+            border: 3px solid var(--ninjago-yellow);
+            border-radius: 15px;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .minecraft-super-szkola-countdown-title {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--ninjago-yellow);
+            margin-bottom: 30px;
+        }
+
+        .minecraft-super-szkola-countdown-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .minecraft-super-szkola-countdown-box {
+            background: var(--minecraft-green);
+            padding: 20px 30px;
+            border-radius: 10px;
+            min-width: 100px;
+        }
+
+        .minecraft-super-szkola-countdown-number {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            color: var(--ninjago-yellow);
+            display: block;
+        }
+
+        .minecraft-super-szkola-countdown-label {
+            font-size: 0.9rem;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .minecraft-super-szkola-posters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .minecraft-super-szkola-poster-item {
+            aspect-ratio: 2/3;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid var(--ninjago-yellow);
+            position: relative;
+        }
+
+        .minecraft-super-szkola-poster-download-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .minecraft-super-szkola-back-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            padding: 15px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .btn-minecraft-super-szkola-premiere-info {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-minecraft-super-szkola-premiere-info:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 204, 0, 0.4);
+        }
+
+        /* GTA PRAWDZIWE ŻYCIE PAGE STYLES */
+        .gta-prawdziwe-zycie-page {
+            background: linear-gradient(180deg, var(--gta-orange) 0%, var(--gta-dark) 50%, #000 100%);
+            min-height: 100vh;
+        }
+
+        .gta-prawdziwe-zycie-header {
+            background: linear-gradient(180deg, var(--gta-orange) 0%, var(--gta-dark) 100%);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .gta-prawdziwe-zycie-logo {
+            font-family: 'Bangers', cursive;
+            font-size: 5rem;
+            color: var(--text-white);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 3px 3px 0 #000;
+            margin-bottom: 20px;
+        }
+
+        .gta-prawdziwe-zycie-section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .gta-prawdziwe-zycie-title {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            color: var(--ninjago-yellow);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .gta-prawdziwe-zycie-video-container {
+            max-width: 900px;
+            margin: 30px auto;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid var(--ninjago-yellow);
+        }
+
+        .gta-prawdziwe-zycie-video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #330a00 0%, #1a0500 100%);
+            cursor: pointer;
+        }
+
+        .gta-prawdziwe-zycie-play-button {
+            width: 80px;
+            height: 80px;
+            background: var(--ninjago-yellow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #000;
+        }
+
+        .gta-prawdziwe-zycie-countdown-container {
+            background: rgba(0,0,0,0.8);
+            border: 3px solid var(--ninjago-yellow);
+            border-radius: 15px;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .gta-prawdziwe-zycie-countdown-title {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--ninjago-yellow);
+            margin-bottom: 30px;
+        }
+
+        .gta-prawdziwe-zycie-countdown-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .gta-prawdziwe-zycie-countdown-box {
+            background: var(--gta-orange);
+            padding: 20px 30px;
+            border-radius: 10px;
+            min-width: 100px;
+        }
+
+        .gta-prawdziwe-zycie-countdown-number {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            color: var(--ninjago-yellow);
+            display: block;
+        }
+
+        .gta-prawdziwe-zycie-countdown-label {
+            font-size: 0.9rem;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .gta-prawdziwe-zycie-posters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .gta-prawdziwe-zycie-poster-item {
+            aspect-ratio: 2/3;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid var(--ninjago-yellow);
+            position: relative;
+        }
+
+        .gta-prawdziwe-zycie-poster-download-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .gta-prawdziwe-zycie-back-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            padding: 15px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .btn-gta-prawdziwe-zycie-premiere-info {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-gta-prawdziwe-zycie-premiere-info:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 204, 0, 0.4);
+        }
+
+        /* VIDEO MODAL */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .video-modal video {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 10px;
+            border: 3px solid var(--ninjago-yellow);
+        }
+
+        .video-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2.5rem;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: transform 0.2s;
+        }
+
+        .video-modal-close:hover {
+            transform: scale(1.2);
+            color: var(--ninjago-yellow);
+        }
+
+        .video-modal-title {
+            font-family: 'Bangers', cursive;
+            color: var(--ninjago-yellow);
+            font-size: 1.5rem;
+            margin-top: 15px;
+        }
+
+        /* PREMIERE INFO MODAL */
+        .premiere-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .premiere-modal.active {
+            display: flex;
+        }
+
+        .premiere-content {
+            background: linear-gradient(135deg, #1a0505 0%, #0a0202 100%);
+            border: 3px solid var(--ninjago-yellow);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+        }
+
+        .premiere-logo {
+            font-family: 'Bangers', cursive;
+            font-size: 4rem;
+            color: var(--ninjago-yellow);
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 0 #000;
+        }
+
+        .premiere-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2.5rem;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: transform 0.2s;
+        }
+
+        .premiere-close:hover {
+            transform: scale(1.2);
+            color: var(--ninjago-yellow);
+        }
+
+        .premiere-section {
+            margin-bottom: 30px;
+        }
+
+        .premiere-section-title {
+            font-family: 'Bangers', cursive;
+            font-size: 1.8rem;
+            color: var(--ninjago-yellow);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--ninjago-red);
+            padding-bottom: 10px;
+        }
+
+        .premiere-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .premiere-info-item {
+            background: rgba(201, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--ninjago-red);
+        }
+
+        .premiere-info-label {
+            font-size: 0.9rem;
+            color: var(--ninjago-yellow);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .premiere-info-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .premiere-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .premiere-table th,
+        .premiere-table td {
+            padding: 15px;
+            text-align: left;
+            border: 2px solid var(--ninjago-red);
+        }
+
+        .premiere-table th {
+            background: var(--ninjago-red);
+            color: var(--ninjago-yellow);
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+        }
+
+        .premiere-table td {
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+        }
+
+        .premiere-table tr:hover td {
+            background: rgba(201, 0, 0, 0.2);
+        }
+
+        .btn-premiere-info {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-premiere-info:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 204, 0, 0.4);
         }
     </style>
-
-    <title>File Manager</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <!-- TinyMCE Editor (Self-hosted) - defer for non-blocking load -->
-    <script src="/new3/tinymce/tinymce.min.js" defer></script>
-
-    <!-- CodeMirror CSS (fallback to v5) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/default.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/darcula.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/dialog/dialog.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/matchesonscrollbar.min.css">
-
-    <link rel="stylesheet" href="assets/css/styles.css?v=1.0.0">
 </head>
-<body data-theme="dark" style="background: #151521; color: #ffffff">
-    <div class="file-manager-container" role="application" aria-label="File Manager Application">
-        <!-- Skip Link for Accessibility -->
-        <a href="#fileList" class="skip-link" aria-label="Skip to file list">Skip to content</a>
+<body>
 
-        <!-- Live Region for Screen Reader Announcements -->
-        <div id="liveRegion" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
-        <div id="alertRegion" class="visually-hidden" aria-live="assertive" aria-atomic="true"></div>
+    <!-- VIDEO MODAL -->
+    <div class="video-modal" id="videoModal">
+        <button class="video-modal-close" onclick="closeVideoModal()">×</button>
+        <video id="modalVideo" controls>
+            <source src="" type="video/mp4">
+            Twoja przeglądarka nie obsługuje odtwarzania wideo.
+        </video>
+        <div class="video-modal-title" id="modalVideoTitle"></div>
+    </div>
 
-        <!-- Mobile Sidebar Overlay -->
-        <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()" aria-hidden="true"></div>
-
-        <!-- Sidebar -->
-        <nav class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
-            <div class="sidebar-header">
-                <div class="sidebar-logo" aria-hidden="true">
-                    <i class="fas fa-folder"></i> File Manager
+    <!-- PREMIERE INFO MODAL -->
+    <div class="premiere-modal" id="premiereModal">
+        <div class="premiere-content">
+            <button class="premiere-close" onclick="closePremiereModal()">×</button>
+            <div class="premiere-logo" id="premiereModalLogo">NINJAGO</div>
+            
+            <div class="premiere-section">
+                <h3 class="premiere-section-title" id="premiereSeriesTitle">Informacje o serii</h3>
+                
+                <div class="premiere-info-grid">
+                    <div class="premiere-info-item">
+                        <div class="premiere-info-label">🌍 Kraj emisji</div>
+                        <div class="premiere-info-value" id="premiereCountry">Polska</div>
+                    </div>
+                    <div class="premiere-info-item">
+                        <div class="premiere-info-label">🗣️ Język</div>
+                        <div class="premiere-info-value" id="premiereLanguage">Polski</div>
+                    </div>
+                    <div class="premiere-info-item">
+                        <div class="premiere-info-label">📺 Stacja</div>
+                        <div class="premiere-info-value" id="premiereStation">Kanał YouTube WikiXa</div>
+                    </div>
+                    <div class="premiere-info-item">
+                        <div class="premiere-info-label">🎬 Typ</div>
+                        <div class="premiere-info-value" id="premiereType">Vlog</div>
+                    </div>
                 </div>
-                <button class="sidebar-close-btn" onclick="closeSidebar()" aria-label="Close navigation menu"><i class="fas fa-times" aria-hidden="true"></i></button>
+
+                <h4 style="font-family: 'Bangers', cursive; color: var(--ninjago-yellow); font-size: 1.5rem; margin: 30px 0 15px 0;">
+                    📅 TERMINY PREMIER
+                </h4>
+                
+                <table class="premiere-table">
+                    <thead>
+                        <tr id="premiereTableHeader">
+                            <th>Miesiąc</th>
+                            <th>Data premiery</th>
+                            <th>Godzina</th>
+                        </tr>
+                    </thead>
+                    <tbody id="premiereTableBody">
+                        <!-- Dynamically filled -->
+                    </tbody>
+                </table>
             </div>
-            <div class="sidebar-nav" role="menu">
-                <div class="nav-section" role="group" aria-labelledby="nav-quick-access">
-                    <div class="nav-section-title" id="nav-quick-access">Quick Access</div>
-                    <button class="nav-item active" role="menuitem" onclick="navigateTo('/'); closeSidebarOnMobile();" aria-label="Navigate to home directory">
-                        <i class="fas fa-home" aria-hidden="true"></i> Home
-                    </button>
-                    <button class="nav-item" role="menuitem" onclick="showUploadModal(); closeSidebarOnMobile();" aria-label="Upload files">
-                        <span aria-hidden="true">⬆️</span> Upload Files
-                    </button>
-                    <button class="nav-item" role="menuitem" onclick="showUploadUnzipModal(); closeSidebarOnMobile();" aria-label="Upload and extract zip file">
-                        <i class="fas fa-upload" aria-hidden="true"></i> Upload & Unzip
-                    </button>
-                    <button class="nav-item" role="menuitem" onclick="showCreateDirModal(); closeSidebarOnMobile();" aria-label="Create new folder">
-                        <i class="fas fa-folder-plus" aria-hidden="true"></i> New Folder
-                    </button>
-                    <button class="nav-item" role="menuitem" onclick="showCreateFileModal(); closeSidebarOnMobile();" aria-label="Create new file">
-                        <i class="fas fa-file-medical" aria-hidden="true"></i> New File
-                    </button>
+        </div>
+    </div>
+
+    <!-- SERIES SELECTION PAGE -->
+    <main id="series-selection" class="series-selection-page">
+        <!-- Stars Background -->
+        <div class="stars-background" id="stars-bg"></div>
+
+        <!-- Header -->
+        <header class="series-header">
+            <div class="series-logo" onclick="showSeriesSelection()">Wiki<span>Kids</span></div>
+            <div class="sound-toggle" onclick="toggleSound()">🔊</div>
+        </header>
+
+        <!-- Main Carousel -->
+        <section class="main-carousel">
+            <button class="carousel-nav prev" onclick="changeSlide(-1)">❮</button>
+            
+            <div class="carousel-container">
+                <!-- Slide 1 - Ninjago -->
+                <div class="carousel-slide active" style="background: linear-gradient(135deg, #c90000 0%, #580000 100%);">
+                    <video class="carousel-video" autoplay loop muted playsinline>
+                        <source src="video/Zwiastun.mp4" type="video/mp4">
+                    </video>
+                    <div class="carousel-content">
+                        <h1 class="carousel-title">NINJAGO</h1>
+                        <button class="carousel-btn" onclick="showNinjago()">
+                            ODKRYWAJ →
+                        </button>
+                    </div>
                 </div>
 
-                <div class="nav-section" role="group" aria-labelledby="nav-actions">
-                    <div class="nav-section-title" id="nav-actions">Actions</div>
-                    <button class="nav-item" role="menuitem" onclick="refreshList(); closeSidebarOnMobile();" aria-label="Refresh file list">
-                        <i class="fas fa-sync-alt" aria-hidden="true"></i> Refresh
-                    </button>
-                    <button class="nav-item" role="menuitem" onclick="selectAll(); closeSidebarOnMobile();" aria-label="Select all files">
-                        <span aria-hidden="true">☑️</span> Select All
-                    </button>
+                <!-- Slide 2 - Minecraft -->
+                <div class="carousel-slide" style="background: linear-gradient(135deg, #5cb85c 0%, #3d8b3d 100%);">
+                    <video class="carousel-video" autoplay loop muted playsinline>
+                        <source src="video/MC.mp4" type="video/mp4">
+                    </video>
+                    <div class="carousel-content">
+                        <h1 class="carousel-title">MINECRAFT</h1>
+                        <button class="carousel-btn" onclick="showMinecraft()" style="background: #5cb85c;">
+                            ODKRYWAJ →
+                        </button>
+                    </div>
                 </div>
 
-                <div class="nav-section" role="group" aria-labelledby="nav-preferences">
-                    <div class="nav-section-title" id="nav-preferences">Preferences</div>
-                    <button class="nav-item" role="menuitem" onclick="toggleTheme(); closeSidebarOnMobile();" aria-label="Toggle dark/light theme">
-                        <i class="fas fa-moon" aria-hidden="true"></i> Toggle Theme
-                    </button>
-                    <button class="nav-item" role="menuitem" onclick="setView(viewMode === 'grid' ? 'list' : 'grid'); closeSidebarOnMobile();" aria-label="Toggle between grid and list view">
-                        <span aria-hidden="true">⚏</span> Toggle View
-                    </button>
-                    <button class="nav-item" role="menuitem" onclick="resetUserPreferences(); closeSidebarOnMobile();" aria-label="Reset all settings to defaults">
-                        <i class="fas fa-undo" aria-hidden="true"></i> Reset Settings
-                    </button>
+                <!-- Slide 3 - WikiX Vlog -->
+                <div class="carousel-slide" style="background: linear-gradient(135deg, #0066cc 0%, #003d7a 100%);">
+                    <video class="carousel-video" autoplay loop muted playsinline>
+                        <source src="video/vlogson.mp4" type="video/mp4">
+                    </video>
+                    <div class="carousel-content">
+                        <h1 class="carousel-title">WIKIX VLOG</h1>
+                        <button class="carousel-btn" onclick="showWikix()">
+                            ODKRYWAJ →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Slide 4 - GTA -->
+                <div class="carousel-slide" style="background: linear-gradient(135deg, #ff6600 0%, #cc5200 100%);">
+                    <video class="carousel-video" autoplay loop muted playsinline>
+                        <source src="video/gta2.mp4" type="video/mp4">
+                    </video>
+                    <div class="carousel-content">
+                        <h1 class="carousel-title">GTA</h1>
+                        <button class="carousel-btn" onclick="showGta()">
+                            ODKRYWAJ →
+                        </button>
+                    </div>
+                </div>
+
+                <div class="carousel-indicators">
+                    <span class="indicator active" onclick="goToSlide(0)"></span>
+                    <span class="indicator" onclick="goToSlide(1)"></span>
+                    <span class="indicator" onclick="goToSlide(2)"></span>
+                    <span class="indicator" onclick="goToSlide(3)"></span>
                 </div>
             </div>
+
+            <button class="carousel-nav next" onclick="changeSlide(1)">❯</button>
+        </section>
+
+        <!-- Series Grid -->
+        <section class="series-grid-section">
+            <h2 class="series-grid-title">WYBIERZ SWOJĄ SERIĘ</h2>
+            <div class="series-grid" id="seriesGrid">
+                <div class="series-card" onclick="showNinjago()">
+                    <div class="series-card-placeholder" style="background: linear-gradient(135deg, #c90000 0%, #580000 100%);">
+                        <div class="series-card-icon">🥷</div>
+                        <div class="series-card-name">Ninjago</div>
+                    </div>
+                </div>
+
+                <div class="series-card" onclick="showMinecraft()">
+                    <div class="series-card-placeholder" style="background: linear-gradient(135deg, #5cb85c 0%, #3d8b3d 100%);">
+                        <div class="series-card-icon">⛏️</div>
+                        <div class="series-card-name">Minecraft</div>
+                    </div>
+                </div>
+
+                <div class="series-card" onclick="showWikix()">
+                    <div class="series-card-placeholder" style="background: linear-gradient(135deg, #0066cc 0%, #003d7a 100%);">
+                        <div class="series-card-icon">📹</div>
+                        <div class="series-card-name">WikiX Vlog</div>
+                    </div>
+                </div>
+
+                <div class="series-card" onclick="showGta()">
+                    <div class="series-card-placeholder" style="background: linear-gradient(135deg, #ff6600 0%, #cc5200 100%);">
+                        <div class="series-card-icon">🚗</div>
+                        <div class="series-card-name">GTA</div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="series-card">
+                    <div class="series-card-arrow" onclick="scrollGrid(200)">›</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav-bar">
+            <div class="nav-icon" onclick="showNinjago()" title="Oglądaj">▶</div>
+            <div class="nav-icon" onclick="showSeriesGrid()" title="Przeglądaj">⊞</div>
+            <div class="nav-icon" onclick="openSearch()" title="Szukaj">🔍</div>
         </nav>
 
-        <!-- Main Content -->
-        <main class="main-content" role="main" aria-label="File browser">
-            <!-- Toolbar -->
-            <div class="toolbar" role="toolbar" aria-label="File actions toolbar">
-                <div class="toolbar-left">
-                    <button class="mobile-menu-toggle" onclick="toggleSidebar()" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar">
-                        <span aria-hidden="true">☰</span>
-                    </button>
+        <!-- Legal Stuff -->
+        <div class="legal-stuff" onclick="alert('Informacje prawne')">Legal stuff</div>
+    </main>
 
-                    <!-- Breadcrumb Navigation -->
-                    <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb navigation">
-                        <div class="breadcrumb-item">
-                            <button class="breadcrumb-link" onclick="navigateTo('/')" aria-label="Navigate to home directory">Home</button>
-                        </div>
-                    </nav>
+    <!-- NINJAGO PAGE -->
+    <main id="ninjago-page" class="ninjago-page">
+        <header class="ninjago-page-header">
+            <div class="ninjago-page-logo">NINJAGO Fanowskie</div>
+            <p>Moc żywiołów, smoki i Spinjitzu – witaj w świecie Fanowskiego NINJAGO!</p>
+        </header>
 
-                    <!-- Search Box -->
-                    <div class="search-box" role="search">
-                        <label for="searchInput" class="visually-hidden">Search files</label>
-                        <input type="search" class="search-input" id="searchInput" placeholder="Search files..." onkeyup="searchFiles()" aria-label="Search files in current directory">
-                        <span class="search-icon" aria-hidden="true"><i class="fas fa-search"></i></span>
-                    </div>
+        <!-- Ninjago Misja -->
+        <section class="ninjago-section">
+            <div class="video-container">
+                <div class="video-placeholder" onclick="playVideo('video/Zwiastun.mp4', 'Ninjago Misja')">
+                    <img src="img/SzczecinNinjago.png" alt="Ninjago Misja" style="width:100%; height:100%; object-fit:cover; opacity:0.7;">
+                    <div class="play-button" style="position:absolute;">▶</div>
                 </div>
+            </div>
+        </section>
 
-                <div class="toolbar-right" role="group" aria-label="File operations">
-                    <!-- Help Button -->
-                    <button class="btn btn-light" onclick="showKeyboardShortcutsHelp()" aria-label="Keyboard shortcuts (?)" title="Keyboard shortcuts (?)">
-                        <i class="fas fa-keyboard" aria-hidden="true"></i>
-                    </button>
-
-                    <!-- View Toggle -->
-                    <div class="view-toggle" role="group" aria-label="View mode">
-                        <button class="view-toggle-btn" onclick="setView('grid')" id="gridViewBtn" aria-label="Grid view" aria-pressed="false">
-                            <span aria-hidden="true">⚏</span>
-                        </button>
-                        <button class="view-toggle-btn active" onclick="setView('list')" id="listViewBtn" aria-label="List view" aria-pressed="true">
-                            <span aria-hidden="true">☰</span>
-                        </button>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <button class="btn btn-primary" onclick="showUploadModal()" aria-label="Upload files (Shift+U)" aria-keyshortcuts="Shift+U">
-                        <span aria-hidden="true">⬆️</span> Upload
-                    </button>
-                    <button class="btn btn-light toolbar-btn-newfile" onclick="showCreateFileModal()" aria-label="Create new file (Shift+N)" aria-keyshortcuts="Shift+N">
-                        <i class="fas fa-file-medical" aria-hidden="true"></i> New File
-                    </button>
-                    <button class="btn btn-light toolbar-btn-newfolder" onclick="showCreateDirModal()" aria-label="Create new folder (Shift+F)" aria-keyshortcuts="Shift+F">
-                        <i class="fas fa-folder-plus" aria-hidden="true"></i> New Folder
-                    </button>
-                    <button class="btn btn-light toolbar-btn-edit" onclick="editSelected()" aria-label="Edit selected file (Shift+E)" aria-keyshortcuts="Shift+E">
-                        <i class="fas fa-edit" aria-hidden="true"></i> Edit
-                    </button>
-                    <button class="btn btn-light toolbar-btn-download" onclick="downloadSelected()" aria-label="Download selected items (Shift+D)" aria-keyshortcuts="Shift+D">
-                        <span aria-hidden="true">⬇️</span> Download
-                    </button>
-                    <button class="btn btn-light toolbar-btn-copy" onclick="copySelected()" aria-label="Copy selected items (Shift+C)" aria-keyshortcuts="Shift+C">
-                        <i class="fas fa-copy" aria-hidden="true"></i> Copy
-                    </button>
-                    <button class="btn btn-light toolbar-btn-move" onclick="moveSelected()" aria-label="Move selected items (Shift+M)" aria-keyshortcuts="Shift+M">
-                        <i class="fas fa-arrows-alt" aria-hidden="true"></i> Move
-                    </button>
-                    <button class="btn btn-danger toolbar-btn-delete" onclick="deleteSelected()" aria-label="Delete selected items (Delete)" aria-keyshortcuts="Delete">
-                        <i class="fas fa-trash" aria-hidden="true"></i> Delete
-                    </button>
-
-                    <!-- Mobile More Actions Button -->
-                    <button class="btn btn-light mobile-more-btn" onclick="toggleMobileActions(); return false;" style="display: none;" aria-label="More actions" aria-expanded="false" aria-controls="mobileActionsDropdown">
-                        <span aria-hidden="true">⋯</span> More
-                    </button>
+        <!-- Three Sections -->
+        <section class="ninjago-section" style="background:#000;">
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:1200px; margin:0 auto;">
+                <div style="background:linear-gradient(135deg,#8B4513,#654321); height:400px; border-radius:10px; display:flex; align-items:center; justify-content:center;">
+                    <h3 style="font-family:'Bangers',cursive; font-size:2.5rem; color:var(--ninjago-yellow);">Połączeni</h3>
                 </div>
-                
-                <!-- Mobile Actions Dropdown -->
-                <div id="mobileActionsDropdown" class="mobile-actions-dropdown" style="display: none;" role="menu" aria-label="Additional actions">
-                    <button class="btn btn-light" role="menuitem" onclick="showCreateFileModal(); hideMobileActions();" aria-label="Create new file"><i class="fas fa-file-medical" aria-hidden="true"></i> New File</button>
-                    <button class="btn btn-light" role="menuitem" onclick="showCreateDirModal(); hideMobileActions();" aria-label="Create new folder"><i class="fas fa-folder-plus" aria-hidden="true"></i> New Folder</button>
-                    <button class="btn btn-light" role="menuitem" onclick="editSelected(); hideMobileActions();" aria-label="Edit selected file"><i class="fas fa-edit" aria-hidden="true"></i> Edit</button>
-                    <button class="btn btn-light" role="menuitem" onclick="downloadSelected(); hideMobileActions();" aria-label="Download selected items"><i class="fas fa-download" aria-hidden="true"></i> Download</button>
-                    <button class="btn btn-light" role="menuitem" onclick="copySelected(); hideMobileActions();" aria-label="Copy selected items"><i class="fas fa-copy" aria-hidden="true"></i> Copy</button>
-                    <button class="btn btn-light" role="menuitem" onclick="moveSelected(); hideMobileActions();" aria-label="Move selected items"><i class="fas fa-arrows-alt" aria-hidden="true"></i> Move</button>
-                    <button class="btn btn-danger" role="menuitem" onclick="deleteSelected(); hideMobileActions();" aria-label="Delete selected items"><i class="fas fa-trash" aria-hidden="true"></i> Delete</button>
-                    <hr style="margin: 5px 0; border-color: var(--border-color);">
-                    <button class="btn btn-light" role="menuitem" onclick="showKeyboardShortcutsHelp(); hideMobileActions();" aria-label="Keyboard shortcuts"><i class="fas fa-keyboard" aria-hidden="true"></i> Shortcuts</button>
+                <div style="background:linear-gradient(135deg,#00aa00,#006600); height:400px; border-radius:10px; display:flex; align-items:center; justify-content:center;">
+                    <h3 style="font-family:'Bangers',cursive; font-size:2.5rem; color:var(--ninjago-yellow);">Nowa Generacja</h3>
+                </div>
+        </section>
+
+        <!-- NOWA GENERACJA SEZON 2 -->
+        <section class="ninjago-section" style="background:linear-gradient(180deg,#000,#1a4d1a);">
+            <h2 class="ninjago-title">NOWY SEZON</h2>
+            <h3 style="font-family:'Bangers',cursive; font-size:2.5rem; color:#fff; margin-bottom:30px;">Ninjago Nowa Generacja - Sezon 2</h3>
+            
+            <div class="countdown-container">
+                <h3 class="countdown-title">PREMIERA ZA:</h3>
+                <div class="countdown-boxes" id="countdown-ng">
+                    <div class="countdown-box">
+                        <span class="countdown-number" id="ng-days">00</span>
+                        <span class="countdown-label">DNI</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span class="countdown-number" id="ng-hours">00</span>
+                        <span class="countdown-label">GODZ</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span class="countdown-number" id="ng-mins">00</span>
+                        <span class="countdown-label">MIN</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span class="countdown-number" id="ng-secs">00</span>
+                        <span class="countdown-label">SEK</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- File List Container -->
-            <div class="file-list-container" role="region" aria-label="File browser">
-                <div id="fileList" class="file-list-table" role="grid" aria-label="Files and folders" tabindex="0" aria-describedby="fileListInstructions">
-                    <!-- Files will be loaded here -->
-                </div>
-                <div id="fileListInstructions" class="visually-hidden">
-                    Use arrow keys to navigate, Space to select, Enter to open, Delete to delete selected items. Press Shift+F10 or Context Menu key to open context menu.
-                </div>
-                <div class="loading-overlay" id="loadingOverlay" style="display: none;" role="status" aria-label="Loading files">
-                    <div class="spinner" aria-hidden="true"></div>
-                    <span class="visually-hidden">Loading files, please wait...</span>
+            <button class="btn-premiere-info" onclick="showPremiereInfo('nowa-generacja')">
+                ℹ️ INFORMACJE O PREMIERZE
+            </button>
+
+            <div class="video-container">
+                <div class="video-placeholder" onclick="playVideo('video/intro.mp4', 'Zwiastun Sezonu 2')">
+                    <div style="text-align:center; color:#fff;">
+                        <div class="play-button" style="margin:0 auto 20px auto;">▶</div>
+                        <h3 style="font-family:'Bangers',cursive; font-size:2rem;">ZWIASTUN SEZONU 2</h3>
+                    </div>
                 </div>
             </div>
 
-            <!-- Status Bar -->
-            <footer class="status-bar" role="contentinfo" aria-label="File browser status">
-                <div class="status-left">
-                    <span id="itemCount" aria-live="polite">0 items</span> <span aria-hidden="true">•</span>
-                    <span id="selectedCount" aria-live="polite">0 selected</span>
+            <h3 style="font-family:'Bangers',cursive; font-size:2rem; color:var(--ninjago-yellow); margin:40px 0 20px 0;">PLAKATY DO POBRANIA</h3>
+            <div class="posters-grid">
+                <div class="poster-item">
+                    <img src="img/SzczecinNinjago.png" alt="Plakat 1" style="width:100%; height:100%; object-fit:cover;">
+                    <button class="poster-download-btn" onclick="downloadFile('img/SzczecinNinjago.png', 'SzczecinNinjago.png')">Pobierz</button>
                 </div>
-                <div class="status-right">
-                    <span id="currentPath" aria-label="Current directory path">/</span>
+                <div class="poster-item">
+                    <img src="img/odra.jpg" alt="Plakat 2" style="width:100%; height:100%; object-fit:cover;">
+                    <button class="poster-download-btn" onclick="downloadFile('img/odra.jpg', 'odra.jpg')">Pobierz</button>
                 </div>
-            </footer>
-        </main>
-    </div>
-
-    <!-- Upload Modal -->
-    <div id="uploadModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="uploadModalTitle" aria-describedby="uploadModalDesc">
-        <div class="modal-content" style="max-width: 600px;">
-            <div class="modal-header" id="uploadModalTitle">Upload Files</div>
-            <div class="modal-body">
-                <p id="uploadModalDesc" class="visually-hidden">Upload files, folders, or archives to the current directory</p>
-                <!-- Upload Type Selection -->
-                <div class="form-group" role="group" aria-labelledby="uploadTypeLabel">
-                    <span class="form-label" id="uploadTypeLabel">Upload Type:</span>
-                    <div style="display: flex; gap: 10px; margin-bottom: 15px;" role="radiogroup" aria-labelledby="uploadTypeLabel">
-                        <button class="btn btn-light" onclick="setUploadType('files')" id="filesTypeBtn" role="radio" aria-checked="true" aria-label="Upload individual files"><i class="fas fa-file" aria-hidden="true"></i> Files</button>
-                        <button class="btn btn-light" onclick="setUploadType('folder')" id="folderTypeBtn" role="radio" aria-checked="false" aria-label="Upload entire folder"><i class="fas fa-folder" aria-hidden="true"></i> Folder</button>
-                        <button class="btn btn-light" onclick="setUploadType('zipExtract')" id="zipExtractTypeBtn" role="radio" aria-checked="false" aria-label="Upload and extract archive"><i class="fas fa-file-archive" aria-hidden="true"></i> Zip & Extract</button>
-                    </div>
+                <div class="poster-item">
+                    <img src="img/photo.jpg" alt="Plakat 3" style="width:100%; height:100%; object-fit:cover;">
+                    <button class="poster-download-btn" onclick="downloadFile('img/photo.jpg', 'plakat3.jpg')">Pobierz Wkrótce</button>
                 </div>
-
-                <!-- File Input for regular files -->
-                <div id="filesUploadSection" class="form-group">
-                    <label class="form-label" for="fileInput">Select Files:</label>
-                    <input type="file" id="fileInput" multiple class="form-control" aria-describedby="fileInputHelp">
-                    <small id="fileInputHelp" style="color: var(--text-muted); margin-top: 5px; display: block;">Select multiple files to upload</small>
+                <div class="poster-item">
+                    <img src="img/photo.jpg" alt="Plakat 4" style="width:100%; height:100%; object-fit:cover;">
+                    <button class="poster-download-btn" onclick="downloadFile('img/photo.jpg', 'plakat4.jpg')">Pobierz Wkrótce</button>
                 </div>
-
-                <!-- Folder Input -->
-                <div id="folderUploadSection" class="form-group" style="display: none;">
-                    <label class="form-label" for="folderInput">Select Folder:</label>
-                    <input type="file" id="folderInput" webkitdirectory multiple class="form-control" aria-describedby="folderInputHelp">
-                    <small id="folderInputHelp" style="color: var(--text-muted); margin-top: 5px; display: block;">Select a folder to upload (preserves structure) - Upload starts automatically</small>
-                </div>
-
-                <!-- Zip Upload and Extract -->
-                <div id="zipExtractUploadSection" style="display: none;">
-                    <div class="form-group">
-                        <label class="form-label" for="zipInput">Select Archive File:</label>
-                        <input type="file" id="zipInput" accept=".zip,.rar,.7z,.tar,.gz" class="form-control" aria-describedby="zipInputHelp">
-                        <small id="zipInputHelp" style="color: var(--text-muted); margin-top: 5px; display: block;">Upload and automatically extract archive</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="extractPath">Extract to folder (optional):</label>
-                        <input type="text" id="extractPath" class="form-control" placeholder="Leave empty to extract to current directory" aria-describedby="extractPathHelp">
-                        <small id="extractPathHelp" class="visually-hidden">Leave empty to extract to current directory</small>
-                    </div>
-
-                </div>
-
-                <!-- Upload Progress -->
-                <div id="uploadProgress" style="display: none;" role="status" aria-live="polite">
-                    <div style="background: var(--bg-secondary); border-radius: var(--radius); padding: 10px; margin: 10px 0;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                            <span id="uploadProgressText">Uploading...</span>
-                            <span id="uploadProgressPercent" aria-live="polite">0%</span>
-                        </div>
-                        <div style="background: var(--border-color); height: 8px; border-radius: 4px; overflow: hidden;" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Upload progress">
-                            <div id="uploadProgressBar" style="background: var(--accent-color); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="uploadList" aria-live="polite"></div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-light" onclick="closeModal('uploadModal')" aria-label="Cancel upload">Cancel</button>
-                <button class="btn btn-primary" onclick="performUpload()" id="uploadBtn" aria-label="Start upload">Upload</button>
+        </section>
+
+        <!-- POŁĄCZENI SEZON 1 -->
+        <section class="ninjago-section" style="background:linear-gradient(180deg,#000,#4a0080);">
+            <h2 class="ninjago-title">NOWA SERIA</h2>
+            <h3 style="font-family:'Bangers',cursive; font-size:2.5rem; color:#fff; margin-bottom:30px;">Ninjago Połączeni - Sezon 1</h3>
+            
+            <div class="countdown-container" style="border-color:#9b30ff;">
+                <h3 class="countdown-title">PREMIERA ZA:</h3>
+                <div class="countdown-boxes" id="countdown-np">
+                    <div class="countdown-box" style="background:#9b30ff;">
+                        <span class="countdown-number" id="np-days">00</span>
+                        <span class="countdown-label">DNI</span>
+                    </div>
+                    <div class="countdown-box" style="background:#9b30ff;">
+                        <span class="countdown-number" id="np-hours">00</span>
+                        <span class="countdown-label">GODZ</span>
+                    </div>
+                    <div class="countdown-box" style="background:#9b30ff;">
+                        <span class="countdown-number" id="np-mins">00</span>
+                        <span class="countdown-label">MIN</span>
+                    </div>
+                    <div class="countdown-box" style="background:#9b30ff;">
+                        <span class="countdown-number" id="np-secs">00</span>
+                        <span class="countdown-label">SEK</span>
+                    </div>
+                </div>
             </div>
+
+            <button class="btn-premiere-info" onclick="showPremiereInfo('polaczeni')" style="background: #9b30ff;">
+                ℹ️ INFORMACJE O PREMIERZE
+            </button>
+
+            <div class="video-container" style="border-color:#9b30ff;">
+                <div class="video-placeholder" onclick="playVideo('video/film.mp4', 'Zwiastun Połączeni')">
+                    <div style="text-align:center; color:#fff;">
+                        <div class="play-button" style="margin:0 auto 20px auto; background:#9b30ff;">▶</div>
+                        <h3 style="font-family:'Bangers',cursive; font-size:2rem;">ZWIASTUN POŁĄCZENI</h3>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-family:'Bangers',cursive; font-size:2rem; color:var(--ninjago-yellow); margin:40px 0 20px 0;">PLAKATY DO POBRANIA</h3>
+            <div class="posters-grid">
+                <div class="poster-item" style="border-color:#9b30ff;">
+                    <img src="img/photo.jpg" alt="Plakat 1" style="width:100%; height:100%; object-fit:cover;">
+                    <button class="poster-download-btn" style="background:#9b30ff;" onclick="downloadFile('img/photo.jpg', 'plakat_polaczeni1.jpg')">Pobierz</button>
+                </div>
+                <div class="poster-item" style="border-color:#9b30ff;">
+                    <img src="img/photo.jpg" alt="Plakat 2" style="width:100%; height:100%; object-fit:cover;">
+                    <button class="poster-download-btn" style="background:#9b30ff;" onclick="downloadFile('img/photo.jpg', 'plakat_polaczeni2.jpg')">Pobierz</button>
+                </div>
+                <div class="poster-item" style="border-color:#9b30ff;">
+                    <img src="img/photo.jpg" alt="Plakat 3" style="width:100%; height:100%; object-fit:cover;">
+                    <button class="poster-download-btn" style="background:#9b30ff;" onclick="downloadFile('img/photo.jpg', 'plakat_polaczeni3.jpg')">Pobierz</button>
+                </div>
+                <div class="poster-item" style="border-color:#9b30ff;">
+                    <img src="img/photo.jpg" alt="Plakat 4" style="width:100%; height:100%; object-fit:cover;">
+                    <button class="poster-download-btn" style="background:#9b30ff;" onclick="downloadFile('img/photo.jpg', 'plakat_polaczeni4.jpg')">Pobierz</button>
+                </div>
+            </div>
+        </section>
+
+        <button class="back-btn" onclick="showSeriesSelection()">← POWRÓT</button>
+    </main>
+
+    <!-- WIKIX VLOG PAGE - UPDATED -->
+    <main id="wikix-page" class="wikix-page">
+        <header class="wikix-page-header">
+            <div class="wikix-page-logo">WIKIX VLOG</div>
+            <p>Witaj w świecie vlogów WikiXa! Oglądaj najnowsze filmy i relacje na żywo!</p>
+        </header>
+
+        <!-- Main Video -->
+        <section class="wikix-section">
+            <div class="wikix-video-container">
+                <div class="wikix-video-placeholder" onclick="playVideo('video/intro.mp4', 'WikiX Vlog - Intro')">
+                    <div class="wikix-play-button">▶</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW SEASON SECTION - UPDATED WITH BANNER AND COUNTDOWN -->
+        <section class="wikix-new-season-container">
+            <h2 class="wikix-new-season-title">NOWY SEZON</h2>
+            <h3 class="wikix-new-season-subtitle">WIKIX VLOG - SEZON 2 | 2026</h3>
+            
+            <!-- BANNER -->
+            <div class="wikix-banner">
+                <div class="wikix-banner-image">
+                    <div class="wikix-banner-text">
+                        <div class="wikix-banner-main">NOWY SEZON</div>
+                        <div class="wikix-banner-sub">WIKIX VLOG - SEZON 2 | 2026</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COUNTDOWN -->
+            <div class="wikix-countdown-box-new">
+                <h3 class="wikix-countdown-title-new">PREMIERA ZA:</h3>
+                <div class="wikix-countdown-boxes-new" id="countdown-wikix">
+                    <div class="wikix-countdown-box-new">
+                        <span class="wikix-countdown-number-new" id="wikix-days">00</span>
+                        <span class="wikix-countdown-label-new">DNI</span>
+                    </div>
+                    <div class="wikix-countdown-box-new">
+                        <span class="wikix-countdown-number-new" id="wikix-hours">00</span>
+                        <span class="wikix-countdown-label-new">GODZ</span>
+                    </div>
+                    <div class="wikix-countdown-box-new">
+                        <span class="wikix-countdown-number-new" id="wikix-mins">00</span>
+                        <span class="wikix-countdown-label-new">MIN</span>
+                    </div>
+                    <div class="wikix-countdown-box-new">
+                        <span class="wikix-countdown-number-new" id="wikix-secs">00</span>
+                        <span class="wikix-countdown-label-new">SEK</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-wikix-premiere-info" onclick="showPremiereInfo('wikix')">
+                ℹ️ INFORMACJE O PREMIERZE
+            </button>
+
+            <div class="wikix-video-container">
+                <div class="wikix-video-placeholder" onclick="playVideo('video/vlogson.mp4', 'Zwiastun WikiX Vlog')">
+                    <div style="text-align:center; color:#fff;">
+                        <div class="wikix-play-button" style="margin:0 auto 20px auto;">▶</div>
+                        <h3 style="font-family:'Bangers',cursive; font-size:2rem;">ZWIASTUN SEZONU</h3>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-family:'Bangers',cursive; font-size:2rem; color:var(--ninjago-yellow); margin:40px 0 20px 0;">MATERIAŁY DO POBRANIA</h3>
+            <div class="wikix-posters-grid">
+                <div class="wikix-poster-item">
+                    <img src="img/vlog.jpg" alt="WikiX Vlog 1" style="width:100%; height:100%; object-fit:cover;">
+                    <button class="wikix-poster-download-btn" onclick="downloadFile('img/odra.jpg', 'wikix_miniaturka1.jpg')">Pobierz</button>
+                </div>
+                <div class="wikix-poster-item">
+                    <img src="img/vlog2.jpg" alt="WikiX Vlog 2" style="width:100%; height:100%; object-fit:cover;">
+                    <button class="wikix-poster-download-btn" onclick="downloadFile('img/vlog2.jpeg', 'wikix_miniaturka2.jpg')">Pobierz</button>
+                </div>
+                <div class="wikix-poster-item">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#222;">
+                        <span style="font-family:'Bangers',cursive; font-size:1.5rem; color:#666;">Wkrótce</span>
+                    </div>
+                    <button class="wikix-poster-download-btn" onclick="alert('Wkrótce dostępne!')">Pobierz Wkrótce</button>
+                </div>
+                <div class="wikix-poster-item">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#222;">
+                        <span style="font-family:'Bangers',cursive; font-size:1.5rem; color:#666;">Wkrótce</span>
+                    </div>
+                    <button class="wikix-poster-download-btn" onclick="alert('Wkrótce dostępne!')">Pobierz Wkrótce</button>
+                </div>
+            </div>
+        </section>
+
+        <button class="wikix-back-btn" onclick="showSeriesSelection()">← POWRÓT</button>
+    </main>
+
+    <!-- MINECRAFT SUPER SZKOŁA PAGE -->
+    <main id="minecraft-super-szkola-page" class="minecraft-super-szkola-page">
+        <header class="minecraft-super-szkola-header">
+            <div class="minecraft-super-szkola-logo">MINECRAFT SUPER SZKOŁA</div>
+            <p>Przygody w świecie Minecraft! Buduj, odkrywaj i ucz się z nami!</p>
+        </header>
+
+        <!-- Main Video -->
+        <section class="minecraft-super-szkola-section">
+            <div class="minecraft-super-szkola-video-container">
+                <div class="minecraft-super-szkola-video-placeholder" onclick="playVideo('video/minecraft_intro.mp4', 'Minecraft Super Szkoła - Intro')">
+                    <div class="minecraft-super-szkola-play-button">▶</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW SEASON SECTION -->
+        <section class="minecraft-super-szkola-section" style="background:linear-gradient(180deg,#000,#1a3300);">
+            <h2 class="minecraft-super-szkola-title">NOWY SEZON</h2>
+            <h3 style="font-family:'Bangers',cursive; font-size:2.5rem; color:#fff; margin-bottom:30px;">Minecraft Super Szkoła - Sezon 2026</h3>
+            
+            <div class="minecraft-super-szkola-countdown-container">
+                <h3 class="minecraft-super-szkola-countdown-title">PREMIERA ZA:</h3>
+                <div class="minecraft-super-szkola-countdown-boxes" id="countdown-minecraft-super-szkola">
+                    <div class="minecraft-super-szkola-countdown-box">
+                        <span class="minecraft-super-szkola-countdown-number" id="mss-days">00</span>
+                        <span class="minecraft-super-szkola-countdown-label">DNI</span>
+                    </div>
+                    <div class="minecraft-super-szkola-countdown-box">
+                        <span class="minecraft-super-szkola-countdown-number" id="mss-hours">00</span>
+                        <span class="minecraft-super-szkola-countdown-label">GODZ</span>
+                    </div>
+                    <div class="minecraft-super-szkola-countdown-box">
+                        <span class="minecraft-super-szkola-countdown-number" id="mss-mins">00</span>
+                        <span class="minecraft-super-szkola-countdown-label">MIN</span>
+                    </div>
+                    <div class="minecraft-super-szkola-countdown-box">
+                        <span class="minecraft-super-szkola-countdown-number" id="mss-secs">00</span>
+                        <span class="minecraft-super-szkola-countdown-label">SEK</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-minecraft-super-szkola-premiere-info" onclick="showPremiereInfo('minecraft-super-szkola')">
+                ℹ️ INFORMACJE O PREMIERZE
+            </button>
+
+            <div class="minecraft-super-szkola-video-container">
+                <div class="minecraft-super-szkola-video-placeholder" onclick="playVideo('video/minecraft_zwiastun.mp4', 'Zwiastun Minecraft Super Szkoła')">
+                    <div style="text-align:center; color:#fff;">
+                        <div class="minecraft-super-szkola-play-button" style="margin:0 auto 20px auto;">▶</div>
+                        <h3 style="font-family:'Bangers',cursive; font-size:2rem;">ZWIASTUN SEZONU</h3>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-family:'Bangers',cursive; font-size:2rem; color:var(--ninjago-yellow); margin:40px 0 20px 0;">MATERIAŁY DO POBRANIA</h3>
+            <div class="minecraft-super-szkola-posters-grid">
+                <div class="minecraft-super-szkola-poster-item">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #5cb85c, #3d8b3d);">
+                        <span style="font-family:'Bangers',cursive; font-size:1.5rem; color:#fff;">Plakat 1</span>
+                    </div>
+                    <button class="minecraft-super-szkola-poster-download-btn" onclick="downloadFile('img/minecraft1.jpg', 'minecraft_super_szkola1.jpg')">Pobierz</button>
+                </div>
+                <div class="minecraft-super-szkola-poster-item">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #5cb85c, #3d8b3d);">
+                        <span style="font-family:'Bangers',cursive; font-size:1.5rem; color:#fff;">Plakat 2</span>
+                    </div>
+                    <button class="minecraft-super-szkola-poster-download-btn" onclick="downloadFile('img/minecraft2.jpg', 'minecraft_super_szkola2.jpg')">Pobierz</button>
+                </div>
+                <div class="minecraft-super-szkola-poster-item">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#222;">
+                        <span style="font-family:'Bangers',cursive; font-size:1.5rem; color:#666;">Wkrótce</span>
+                    </div>
+                    <button class="minecraft-super-szkola-poster-download-btn" onclick="alert('Wkrótce dostępne!')">Pobierz Wkrótce</button>
+                </div>
+                <div class="minecraft-super-szkola-poster-item">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#222;">
+                        <span style="font-family:'Bangers',cursive; font-size:1.5rem; color:#666;">Wkrótce</span>
+                    </div>
+                    <button class="minecraft-super-szkola-poster-download-btn" onclick="alert('Wkrótce dostępne!')">Pobierz Wkrótce</button>
+                </div>
+            </div>
+        </section>
+
+        <button class="minecraft-super-szkola-back-btn" onclick="showSeriesSelection()">← POWRÓT</button>
+    </main>
+
+    <!-- GTA PRAWDZIWE ŻYCIE PAGE -->
+    <main id="gta-prawdziwe-zycie-page" class="gta-prawdziwe-zycie-page">
+        <header class="gta-prawdziwe-zycie-header">
+            <div class="gta-prawdziwe-zycie-logo">GTA V PRAWDZIWE ŻYCIE</div>
+            <p>Przygody w świecie GTA! Odkrywaj Los Santos i żyj jak w prawdziwym życiu!</p>
+        </header>
+
+        <!-- Main Video -->
+        <section class="gta-prawdziwe-zycie-section">
+            <div class="gta-prawdziwe-zycie-video-container">
+                <div class="gta-prawdziwe-zycie-video-placeholder" onclick="playVideo('video/gta_intro.mp4', 'GTA V Prawdziwe Życie - Intro')">
+                    <div class="gta-prawdziwe-zycie-play-button">▶</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW SEASON SECTION -->
+        <section class="gta-prawdziwe-zycie-section" style="background:linear-gradient(180deg,#000,#330a00);">
+            <h2 class="gta-prawdziwe-zycie-title">NOWY SEZON</h2>
+            <h3 style="font-family:'Bangers',cursive; font-size:2.5rem; color:#fff; margin-bottom:30px;">GTA V Prawdziwe Życie - Sezon 2026</h3>
+            
+            <div class="gta-prawdziwe-zycie-countdown-container">
+                <h3 class="gta-prawdziwe-zycie-countdown-title">PREMIERA ZA:</h3>
+                <div class="gta-prawdziwe-zycie-countdown-boxes" id="countdown-gta-prawdziwe-zycie">
+                    <div class="gta-prawdziwe-zycie-countdown-box">
+                        <span class="gta-prawdziwe-zycie-countdown-number" id="gpz-days">00</span>
+                        <span class="gta-prawdziwe-zycie-countdown-label">DNI</span>
+                    </div>
+                    <div class="gta-prawdziwe-zycie-countdown-box">
+                        <span class="gta-prawdziwe-zycie-countdown-number" id="gpz-hours">00</span>
+                        <span class="gta-prawdziwe-zycie-countdown-label">GODZ</span>
+                    </div>
+                    <div class="gta-prawdziwe-zycie-countdown-box">
+                        <span class="gta-prawdziwe-zycie-countdown-number" id="gpz-mins">00</span>
+                        <span class="gta-prawdziwe-zycie-countdown-label">MIN</span>
+                    </div>
+                    <div class="gta-prawdziwe-zycie-countdown-box">
+                        <span class="gta-prawdziwe-zycie-countdown-number" id="gpz-secs">00</span>
+                        <span class="gta-prawdziwe-zycie-countdown-label">SEK</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-gta-prawdziwe-zycie-premiere-info" onclick="showPremiereInfo('gta-prawdziwe-zycie')">
+                ℹ️ INFORMACJE O PREMIERZE
+            </button>
+
+            <div class="gta-prawdziwe-zycie-video-container">
+                <div class="gta-prawdziwe-zycie-video-placeholder" onclick="playVideo('video/gta_zwiastun.mp4', 'Zwiastun GTA V Prawdziwe Życie')">
+                    <div style="text-align:center; color:#fff;">
+                        <div class="gta-prawdziwe-zycie-play-button" style="margin:0 auto 20px auto;">▶</div>
+                        <h3 style="font-family:'Bangers',cursive; font-size:2rem;">ZWIASTUN SEZONU</h3>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-family:'Bangers',cursive; font-size:2rem; color:var(--ninjago-yellow); margin:40px 0 20px 0;">MATERIAŁY DO POBRANIA</h3>
+            <div class="gta-prawdziwe-zycie-posters-grid">
+                <div class="gta-prawdziwe-zycie-poster-item">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #ff6600, #cc5200);">
+                        <span style="font-family:'Bangers',cursive; font-size:1.5rem; color:#fff;">Plakat 1</span>
+                    </div>
+                    <button class="gta-prawdziwe-zycie-poster-download-btn" onclick="downloadFile('img/gta1.jpg', 'gta_prawdziwe_zycie1.jpg')">Pobierz</button>
+                </div>
+                <div class="gta-prawdziwe-zycie-poster-item">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #ff6600, #cc5200);">
+                        <span style="font-family:'Bangers',cursive; font-size:1.5rem; color:#fff;">Plakat 2</span>
+                    </div>
+                    <button class="gta-prawdziwe-zycie-poster-download-btn" onclick="downloadFile('img/gta2.jpg', 'gta_prawdziwe_zycie2.jpg')">Pobierz</button>
+                </div>
+                <div class="gta-prawdziwe-zycie-poster-item">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#222;">
+                        <span style="font-family:'Bangers',cursive; font-size:1.5rem; color:#666;">Wkrótce</span>
+                    </div>
+                    <button class="gta-prawdziwe-zycie-poster-download-btn" onclick="alert('Wkrótce dostępne!')">Pobierz Wkrótce</button>
+                </div>
+                <div class="gta-prawdziwe-zycie-poster-item">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#222;">
+                        <span style="font-family:'Bangers',cursive; font-size:1.5rem; color:#666;">Wkrótce</span>
+                    </div>
+                    <button class="gta-prawdziwe-zycie-poster-download-btn" onclick="alert('Wkrótce dostępne!')">Pobierz Wkrótce</button>
+                </div>
+            </div>
+        </section>
+
+        <button class="gta-prawdziwe-zycie-back-btn" onclick="showSeriesSelection()">← POWRÓT</button>
+    </main>
+
+    <!-- MINECRAFT PAGE -->
+    <main id="minecraft-page" class="minecraft-page">
+        <div style="padding: 100px 20px; text-align: center;">
+            <h1 style="font-family: 'Bangers', cursive; font-size: 4rem; color: #5cb85c;">MINECRAFT</h1>
+            <button onclick="showMinecraftSuperSzkola()" style="margin-top: 30px; padding: 15px 30px; background: #5cb85c; border: none; border-radius: 50px; font-family: 'Bangers', cursive; font-size: 1.2rem; cursor: pointer;">
+                ODKRYJ SUPER SZKOŁĘ →
+            </button>
+            <button onclick="showSeriesSelection()" style="margin-top: 15px; padding: 15px 30px; background: #3d8b3d; border: none; border-radius: 50px; font-family: 'Bangers', cursive; font-size: 1.2rem; cursor: pointer;">
+                ← POWRÓT DO WYBORU SERII
+            </button>
         </div>
-    </div>
+    </main>
 
-    <!-- Create Directory Modal -->
-    <div id="createDirModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="createDirModalTitle">
-        <div class="modal-content">
-            <div class="modal-header" id="createDirModalTitle">Create New Folder</div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label" for="dirName">Folder Name:</label>
-                    <input type="text" id="dirName" class="form-control" placeholder="Enter folder name" onkeydown="if(event.key === 'Enter') createDirectory()" aria-required="true">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-light" onclick="closeModal('createDirModal')" aria-label="Cancel creating folder">Cancel</button>
-                <button class="btn btn-success" onclick="createDirectory()" aria-label="Create folder">Create</button>
-            </div>
+    <!-- GTA PAGE -->
+    <main id="gta-page" class="gta-page">
+        <div style="padding: 100px 20px; text-align: center;">
+            <h1 style="font-family: 'Bangers', cursive; font-size: 4rem; color: #ff6600;">GTA</h1>
+            <button onclick="showGtaPrawdziweZycie()" style="margin-top: 30px; padding: 15px 30px; background: #ff6600; border: none; border-radius: 50px; font-family: 'Bangers', cursive; font-size: 1.2rem; cursor: pointer;">
+                ODKRYJ PRAWDZIWE ŻYCIE →
+            </button>
+            <button onclick="showSeriesSelection()" style="margin-top: 15px; padding: 15px 30px; background: #cc5200; border: none; border-radius: 50px; font-family: 'Bangers', cursive; font-size: 1.2rem; cursor: pointer;">
+                ← POWRÓT DO WYBORU SERII
+            </button>
         </div>
-    </div>
-
-    <!-- Create File Modal -->
-    <div id="createFileModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="createFileModalTitle">
-        <div class="modal-content">
-            <div class="modal-header" id="createFileModalTitle">Create New File</div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label" for="fileName">File Name:</label>
-                    <input type="text" id="fileName" class="form-control" placeholder="Enter file name (e.g., document.txt, style.css)" onkeydown="if(event.key === 'Enter') createFile()" aria-required="true" aria-describedby="fileNameHelp">
-                    <small id="fileNameHelp" class="visually-hidden">Include the file extension, for example: document.txt or style.css</small>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-light" onclick="closeModal('createFileModal')" aria-label="Cancel creating file">Cancel</button>
-                <button class="btn btn-success" onclick="createFile()" aria-label="Create file and open editor">Create & Edit</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Rename Modal -->
-    <div id="renameModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="renameModalTitle">
-        <div class="modal-content">
-            <div class="modal-header" id="renameModalTitle">Rename</div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label" for="newName">New Name:</label>
-                    <input type="text" id="newName" class="form-control" placeholder="Enter new name" aria-required="true" onkeydown="if(event.key === 'Enter') performRename()">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-light" onclick="closeModal('renameModal')" aria-label="Cancel renaming">Cancel</button>
-                <button class="btn btn-primary" onclick="performRename()" aria-label="Confirm rename">Rename</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Move Modal -->
-    <div id="moveModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="moveModalTitle">
-        <div class="modal-content">
-            <div class="modal-header" id="moveModalTitle">Move Items</div>
-            <div class="modal-body">
-                <div class="form-group" role="group" aria-labelledby="moveDestLabel">
-                    <span class="form-label" id="moveDestLabel">Choose Destination:</span>
-                    <div class="move-destination-options" role="group">
-                        <button class="btn btn-light" onclick="toggleFolderPicker()" id="folderPickerToggle" aria-pressed="true" aria-label="Browse folders">
-                            <i class="fas fa-folder-open" aria-hidden="true"></i> Browse Folders
-                        </button>
-                        <button class="btn btn-light" onclick="toggleManualPath()" id="manualPathToggle" aria-pressed="false" aria-label="Enter path manually">
-                            <i class="fas fa-keyboard" aria-hidden="true"></i> Manual Path
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Folder Picker Section -->
-                <div class="form-group" id="folderPickerSection">
-                    <label class="form-label" id="moveFolderPickerLabel">Browse and select destination folder:</label>
-                    <nav class="folder-breadcrumb" id="moveBreadcrumb" aria-label="Folder navigation">
-                        <button class="breadcrumb-link" onclick="navigateMoveTo('/')" aria-label="Navigate to root"><i class="fas fa-home" aria-hidden="true"></i> Root</button>
-                    </nav>
-                    <div class="folder-picker" id="folderPicker" role="listbox" aria-labelledby="moveFolderPickerLabel" tabindex="0">
-                        <div class="folder-picker-loading" role="status"><i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Loading folders...</div>
-                    </div>
-                    <div class="selected-path" aria-live="polite">
-                        <strong>Selected: </strong><span id="selectedMovePath">/</span>
-                    </div>
-                </div>
-
-                <!-- Manual Path Section -->
-                <div class="form-group" id="manualPathSection" style="display: none;">
-                    <label class="form-label" for="movePath">Destination Path:</label>
-                    <input type="text" id="movePath" class="form-control" placeholder="Enter destination path (e.g., /folder/subfolder)" aria-describedby="movePathHelp">
-                    <small class="form-text" id="movePathHelp">Current directory: <span id="currentMoveDir"></span></small>
-                </div>
-
-                <div class="form-group" id="moveItemsList">
-                    <span class="form-label" id="moveItemsLabel">Items to move:</span>
-                    <div id="moveItems" role="list" aria-labelledby="moveItemsLabel"></div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-light" onclick="closeModal('moveModal')" aria-label="Cancel move operation">Cancel</button>
-                <button class="btn btn-primary" onclick="performMove()" aria-label="Confirm move">Move</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Copy Modal -->
-    <div id="copyModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="copyModalTitle">
-        <div class="modal-content">
-            <div class="modal-header" id="copyModalTitle">Copy Items</div>
-            <div class="modal-body">
-                <div class="form-group" role="group" aria-labelledby="copyDestLabel">
-                    <span class="form-label" id="copyDestLabel">Choose Destination:</span>
-                    <div class="move-destination-options" role="group">
-                        <button class="btn btn-light" onclick="toggleCopyFolderPicker()" id="copyFolderPickerToggle" aria-pressed="true" aria-label="Browse folders">
-                            <i class="fas fa-folder-open" aria-hidden="true"></i> Browse Folders
-                        </button>
-                        <button class="btn btn-light" onclick="toggleCopyManualPath()" id="copyManualPathToggle" aria-pressed="false" aria-label="Enter path manually">
-                            <i class="fas fa-keyboard" aria-hidden="true"></i> Manual Path
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Folder Picker Section -->
-                <div class="form-group" id="copyFolderPickerSection">
-                    <label class="form-label" id="copyFolderPickerLabel">Browse and select destination folder:</label>
-                    <nav class="folder-breadcrumb" id="copyBreadcrumb" aria-label="Folder navigation">
-                        <button class="breadcrumb-link" onclick="navigateCopyTo('/')" aria-label="Navigate to root"><i class="fas fa-home" aria-hidden="true"></i> Root</button>
-                    </nav>
-                    <div class="folder-picker" id="copyFolderPicker" role="listbox" aria-labelledby="copyFolderPickerLabel" tabindex="0">
-                        <div class="folder-picker-loading" role="status"><i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Loading folders...</div>
-                    </div>
-                    <div class="selected-path" aria-live="polite">
-                        <strong>Selected: </strong><span id="selectedCopyPath">/</span>
-                    </div>
-                </div>
-
-                <!-- Manual Path Section -->
-                <div class="form-group" id="copyManualPathSection" style="display: none;">
-                    <label class="form-label" for="copyPath">Destination Path:</label>
-                    <input type="text" id="copyPath" class="form-control" placeholder="Enter destination path (e.g., /folder/subfolder)" aria-describedby="copyPathHelp">
-                    <small class="form-text" id="copyPathHelp">Current directory: <span id="currentCopyDir"></span></small>
-                </div>
-
-                <div class="form-group" id="copyItemsList">
-                    <span class="form-label" id="copyItemsLabel">Items to copy:</span>
-                    <div id="copyItems" role="list" aria-labelledby="copyItemsLabel"></div>
-                </div>
-
-                <!-- New filename input (only shown for single file copy) -->
-                <div class="form-group" id="copyFilenameSection" style="display: none;">
-                    <label class="form-label" for="copyNewFilename">New filename (optional):</label>
-                    <input type="text" id="copyNewFilename" class="form-control" placeholder="Leave empty to keep original filename" aria-describedby="copyFilenameHelp">
-                    <small class="form-text" id="copyFilenameHelp">Default: <span id="copyOriginalFilename"></span></small>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-light" onclick="closeModal('copyModal')" aria-label="Cancel copy operation">Cancel</button>
-                <button class="btn btn-primary" onclick="performCopy()" aria-label="Confirm copy">Copy</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Editor Modal -->
-    <div id="editorModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="editorModalTitle">
-        <div class="modal-content" style="max-width: 90%; width: 90%; height: 90vh; display: flex; flex-direction: column;">
-            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
-                <div id="editorModalTitle">
-                    Edit File: <span id="editFileName"></span>
-                    <span id="fileType" style="color: var(--text-muted); margin-left: 10px;" aria-label="File type"></span>
-                </div>
-                <div style="display: flex; gap: 10px;" role="group" aria-label="Editor options">
-                    <button class="btn btn-light" onclick="toggleWysiwyg()" id="wysiwygBtn" style="display: none;" aria-label="Toggle WYSIWYG editor" aria-pressed="false">
-                        <i class="fas fa-eye" aria-hidden="true"></i> WYSIWYG
-                    </button>
-                    <button class="btn btn-light" onclick="formatCode()" aria-label="Format code">
-                        <i class="fas fa-paint-brush" aria-hidden="true"></i> Format
-                    </button>
-                </div>
-            </div>
-            <div class="modal-body" style="display: flex; flex: 1; padding: 0; overflow: hidden; min-height: 0;">
-                <div id="editorContainer" style="flex: 1; position: relative; overflow: hidden;" role="region" aria-label="Code editor">
-                    <textarea id="codeEditor" style="width: 100%; height: 100%; display: none;" aria-label="Code editor textarea"></textarea>
-                </div>
-                <div id="wysiwygContainer" style="flex: 1; display: none; overflow: auto;" role="region" aria-label="WYSIWYG editor">
-                    <textarea id="wysiwygEditor" aria-label="Rich text editor"></textarea>
-                </div>
-                <div id="previewContainer" style="flex: 1; display: none; padding: 20px; overflow: auto; background: var(--bg-secondary); border-left: 1px solid var(--border-color);" role="region" aria-label="Preview">
-                    <iframe id="previewFrame" style="width: 100%; height: 100%; border: none; background: white;" title="File preview"></iframe>
-                </div>
-            </div>
-            <div class="modal-footer" style="display: flex; justify-content: space-between; flex-shrink: 0;">
-                <div>
-                    <span id="editorStatus" style="color: var(--text-muted);" role="status" aria-live="polite">Ready</span>
-                </div>
-                <div style="display: flex; gap: 10px;" role="group" aria-label="Editor actions">
-                    <button id="previewBtn" class="btn btn-light" onclick="togglePreview()" style="display: none;" aria-label="Toggle preview" aria-pressed="false"><i class="fas fa-eye" aria-hidden="true"></i> Preview</button>
-                    <button class="btn btn-light" onclick="closeEditorWithCheck()" aria-label="Cancel editing (Escape)">Cancel</button>
-                    <button class="btn btn-primary" onclick="saveFile(false)" aria-label="Save file (Ctrl+S)" aria-keyshortcuts="Control+S"><i class="fas fa-save" aria-hidden="true"></i> Save</button>
-                    <button class="btn btn-success" onclick="saveFile(true)" aria-label="Save file and close editor"><i class="fas fa-save" aria-hidden="true"></i> Save & Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Keyboard Shortcuts Help Modal -->
-    <div id="shortcutsModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="shortcutsModalTitle">
-        <div class="modal-content" style="max-width: 600px;">
-            <div class="modal-header" id="shortcutsModalTitle">
-                <i class="fas fa-keyboard" aria-hidden="true"></i> Keyboard Shortcuts
-            </div>
-            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
-                <div class="shortcuts-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                    <div class="shortcuts-section">
-                        <h4 style="margin: 0 0 10px 0; color: var(--accent-color); border-bottom: 1px solid var(--border-color); padding-bottom: 5px;">
-                            <i class="fas fa-arrows-alt" aria-hidden="true"></i> Navigation
-                        </h4>
-                        <div class="shortcut-list" style="display: flex; flex-direction: column; gap: 8px;">
-                            <div class="shortcut-item"><kbd>↑</kbd> <kbd>↓</kbd> Navigate files</div>
-                            <div class="shortcut-item"><kbd>←</kbd> Collapse folder</div>
-                            <div class="shortcut-item"><kbd>→</kbd> Expand folder</div>
-                            <div class="shortcut-item"><kbd>Enter</kbd> Open folder / Edit file</div>
-                            <div class="shortcut-item"><kbd>Backspace</kbd> Parent folder</div>
-                            <div class="shortcut-item"><kbd>Home</kbd> / <kbd>End</kbd> First / Last item</div>
-                        </div>
-                    </div>
-                    <div class="shortcuts-section">
-                        <h4 style="margin: 0 0 10px 0; color: var(--accent-color); border-bottom: 1px solid var(--border-color); padding-bottom: 5px;">
-                            <i class="fas fa-check-square" aria-hidden="true"></i> Selection
-                        </h4>
-                        <div class="shortcut-list" style="display: flex; flex-direction: column; gap: 8px;">
-                            <div class="shortcut-item"><kbd>Space</kbd> Toggle selection</div>
-                            <div class="shortcut-item"><kbd>Shift</kbd> + <kbd>A</kbd> Select / Deselect all</div>
-                        </div>
-                    </div>
-                    <div class="shortcuts-section">
-                        <h4 style="margin: 0 0 10px 0; color: var(--accent-color); border-bottom: 1px solid var(--border-color); padding-bottom: 5px;">
-                            <i class="fas fa-bolt" aria-hidden="true"></i> Actions
-                        </h4>
-                        <div class="shortcut-list" style="display: flex; flex-direction: column; gap: 8px;">
-                            <div class="shortcut-item"><kbd>Shift</kbd> + <kbd>U</kbd> Upload files</div>
-                            <div class="shortcut-item"><kbd>Shift</kbd> + <kbd>N</kbd> New file</div>
-                            <div class="shortcut-item"><kbd>Shift</kbd> + <kbd>F</kbd> New folder</div>
-                            <div class="shortcut-item"><kbd>Shift</kbd> + <kbd>E</kbd> Edit file</div>
-                            <div class="shortcut-item"><kbd>Shift</kbd> + <kbd>D</kbd> Download</div>
-                            <div class="shortcut-item"><kbd>Shift</kbd> + <kbd>C</kbd> Copy</div>
-                            <div class="shortcut-item"><kbd>Shift</kbd> + <kbd>M</kbd> Move</div>
-                            <div class="shortcut-item"><kbd>Shift</kbd> + <kbd>R</kbd> Refresh</div>
-                            <div class="shortcut-item"><kbd>Delete</kbd> Delete item</div>
-                            <div class="shortcut-item"><kbd>F2</kbd> Rename</div>
-                        </div>
-                    </div>
-                    <div class="shortcuts-section">
-                        <h4 style="margin: 0 0 10px 0; color: var(--accent-color); border-bottom: 1px solid var(--border-color); padding-bottom: 5px;">
-                            <i class="fas fa-cog" aria-hidden="true"></i> Other
-                        </h4>
-                        <div class="shortcut-list" style="display: flex; flex-direction: column; gap: 8px;">
-                            <div class="shortcut-item"><kbd>/</kbd> Focus search</div>
-                            <div class="shortcut-item"><kbd>?</kbd> Show this help</div>
-                            <div class="shortcut-item"><kbd>Esc</kbd> Close dialog</div>
-                            <div class="shortcut-item"><kbd>Ctrl</kbd> + <kbd>S</kbd> Save (in editor)</div>
-                            <div class="shortcut-item"><kbd>Shift</kbd> + <kbd>F10</kbd> Context menu</div>
-                            <div class="shortcut-item"><kbd>F5</kbd> Refresh</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" onclick="hideModal('shortcutsModal')">
-                    <i class="fas fa-check" aria-hidden="true"></i> Got it
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Context Menu -->
-    <div id="contextMenu" class="context-menu" style="display: none;" role="menu" aria-label="File actions context menu">
-        <button class="context-menu-item" data-action="newfolder" role="menuitem" tabindex="-1" aria-label="Create new folder">
-            <i class="fas fa-folder-plus" aria-hidden="true"></i> New Folder
-        </button>
-        <button class="context-menu-item" data-action="newfile" role="menuitem" tabindex="-1" aria-label="Create new file">
-            <i class="fas fa-file-medical" aria-hidden="true"></i> New File
-        </button>
-        <button class="context-menu-item" data-action="upload" role="menuitem" tabindex="-1" aria-label="Upload files">
-            <i class="fas fa-upload" aria-hidden="true"></i> Upload
-        </button>
-        <div class="context-menu-divider" role="separator" aria-hidden="true"></div>
-        <button class="context-menu-item" data-action="edit" role="menuitem" tabindex="-1" aria-label="Edit file">
-            <i class="fas fa-file-edit" aria-hidden="true"></i> Edit
-        </button>
-        <button class="context-menu-item" data-action="download" role="menuitem" tabindex="-1" aria-label="Download">
-            <i class="fas fa-download" aria-hidden="true"></i> Download
-        </button>
-        <div class="context-menu-divider" role="separator" aria-hidden="true"></div>
-        <button class="context-menu-item" data-action="rename" role="menuitem" tabindex="-1" aria-label="Rename">
-            <i class="fas fa-edit" aria-hidden="true"></i> Rename
-        </button>
-        <button class="context-menu-item" data-action="copy" role="menuitem" tabindex="-1" aria-label="Copy">
-            <i class="fas fa-copy" aria-hidden="true"></i> Copy
-        </button>
-        <button class="context-menu-item" data-action="move" role="menuitem" tabindex="-1" aria-label="Move">
-            <i class="fas fa-arrows-alt" aria-hidden="true"></i> Move
-        </button>
-        <div class="context-menu-divider" role="separator" aria-hidden="true"></div>
-        <button class="context-menu-item" data-action="delete" role="menuitem" tabindex="-1" aria-label="Delete">
-            <i class="fas fa-trash" aria-hidden="true"></i> Delete
-        </button>
-    </div>
-
-    <script>window.SESSION_HOME = "\/htdocs";</script>
-    <script src="assets/js/filemanager.js?v=1.0.0"></script>
-    
-    <!-- Fallback to CodeMirror 5 for compatibility -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/php/php.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/markdown/markdown.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/sql/sql.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/clike/clike.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/active-line.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/searchcursor.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/search.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/dialog/dialog.min.js"></script>
-
-    <!-- Hint/Autocomplete support -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/javascript-hint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/html-hint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/css-hint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/sql-hint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/anyword-hint.min.js"></script>
-
-    <!-- Selection and Match Highlighting -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/mark-selection.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/match-highlighter.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/matchesonscrollbar.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/scroll/annotatescrollbar.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/comment/comment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/comment/continuecomment.min.js"></script>
+    </main>
 
     <script>
-        // CodeMirror 6 fallback indicator
-        window.CodeMirror6 = null;
-
-        // Custom PHP hint function
-        CodeMirror.registerHelper("hint", "php", function(editor, options) {
-            console.log('PHP hint function called');  // Debug only
-
-            const cursor = editor.getCursor();
-            const line = editor.getLine(cursor.line);
-            const start = cursor.ch;
-            let end = cursor.ch;
-
-            // Find the start of the current word (including $)
-            let wordStart = start;
-            while (wordStart > 0 && /[\w$]/.test(line.charAt(wordStart - 1))) {
-                wordStart--;
+        // Create stars background
+        function createStars() {
+            const starsBg = document.getElementById('stars-bg');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsBg.appendChild(star);
             }
+        }
 
-            const currentWord = line.slice(wordStart, end);
-            console.log('Current word for PHP hints:', currentWord);
+        // Carousel functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const indicators = document.querySelectorAll('.indicator');
 
-            // Don't require minimum length for $ character
-            if (currentWord.length < 1 && currentWord !== '$') {
-                console.log('Word too short, no hints');
-                return null;
+        function changeSlide(direction) {
+            slides[currentSlide].classList.remove('active');
+            indicators[currentSlide].classList.remove('active');
+            
+            // Pause all videos
+            document.querySelectorAll('.carousel-video').forEach(video => {
+                video.pause();
+            });
+            
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+            
+            // Play video in active slide
+            const activeVideo = slides[currentSlide].querySelector('.carousel-video');
+            if (activeVideo) {
+                activeVideo.play();
             }
+        }
 
-            const suggestions = [];
-            const content = editor.getValue();
-
-            // Extract PHP variables from the document
-            const variableMatches = content.match(/\$[a-zA-Z_][a-zA-Z0-9_]*/g) || [];
-            const uniqueVars = [...new Set(variableMatches)];
-            console.log('Found variables:', uniqueVars);
-
-            // Extract function names
-            const functionMatches = content.match(/function\s+([a-zA-Z_][a-zA-Z0-9_]*)/g) || [];
-            const functions = functionMatches.map(f => f.replace('function ', ''));
-            console.log('Found functions:', functions);
-
-            // Common PHP functions and superglobals
-            const phpItems = [
-                // Superglobals
-                '$_GET', '$_POST', '$_SESSION', '$_COOKIE', '$_SERVER', '$_FILES', '$_ENV', '$_REQUEST', '$GLOBALS',
-                // Common functions
-                'echo', 'print', 'var_dump', 'print_r', 'var_export',
-                'strlen', 'substr', 'strpos', 'strrpos', 'str_replace', 'str_ireplace',
-                'explode', 'implode', 'trim', 'ltrim', 'rtrim',
-                'strtolower', 'strtoupper', 'ucfirst', 'ucwords', 'lcfirst',
-                'is_array', 'is_string', 'is_numeric', 'is_int', 'is_float', 'is_bool', 'is_null', 'is_object',
-                'isset', 'empty', 'unset',
-                'count', 'sizeof', 'array_keys', 'array_values', 'array_merge', 'array_push', 'array_pop', 'array_shift', 'array_unshift',
-                'file_get_contents', 'file_put_contents', 'file_exists', 'is_file', 'is_dir',
-                'mysqli_connect', 'mysqli_query', 'mysqli_fetch_assoc', 'mysqli_close',
-                'date', 'time', 'mktime', 'strtotime', 'microtime',
-                'header', 'session_start', 'session_destroy', 'session_id',
-                'define', 'defined', 'constant',
-                'include', 'require', 'include_once', 'require_once'
-            ];
-
-            // Add variables
-            uniqueVars.forEach(variable => {
-                // Show all variables if just typed $, or filter if typing more
-                if (currentWord === '$' ||
-                    currentWord === '' ||
-                    variable.toLowerCase().indexOf(currentWord.toLowerCase()) === 0) { // Changed to startsWith (===0)
-                    suggestions.push({
-                        text: variable,
-                        displayText: variable + ' (variable)',
-                        className: 'cm-variable-hint'
-                    });
-                }
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            indicators[currentSlide].classList.remove('active');
+            
+            // Pause all videos
+            document.querySelectorAll('.carousel-video').forEach(video => {
+                video.pause();
             });
-
-            // Add custom functions
-            functions.forEach(func => {
-                // Only show functions if not typing a variable
-                if (!currentWord.startsWith('$') &&
-                    (currentWord === '' || func.toLowerCase().indexOf(currentWord.toLowerCase()) === 0)) {
-                    suggestions.push({
-                        text: func + '()',
-                        displayText: func + '() (function)',
-                        className: 'cm-function-hint'
-                    });
-                }
-            });
-
-            // Add PHP built-ins and superglobals
-            phpItems.forEach(item => {
-                const isVariable = item.startsWith('$');
-                const isSuperglobal = item.startsWith('$_');
-
-                // Show variables if typing $, functions if not
-                const shouldShow = (currentWord === '$' && isVariable) ||
-                                 (currentWord.startsWith('$') && isVariable && item.toLowerCase().indexOf(currentWord.toLowerCase()) === 0) ||
-                                 (!currentWord.startsWith('$') && !isVariable && item.toLowerCase().indexOf(currentWord.toLowerCase()) === 0) ||
-                                 (currentWord === '');
-
-                if (shouldShow) {
-                    const displayType = isSuperglobal ? 'superglobal' : (isVariable ? 'variable' : 'function');
-
-                    suggestions.push({
-                        text: item,
-                        displayText: item + ' (PHP ' + displayType + ')',
-                        className: isVariable ? 'cm-variable-hint' : 'cm-builtin-hint'
-                    });
-                }
-            });
-
-            console.log('PHP suggestions:', suggestions.length);
-
-            if (suggestions.length === 0) {
-                return null;
+            
+            currentSlide = index;
+            
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+            
+            // Play video in active slide
+            const activeVideo = slides[currentSlide].querySelector('.carousel-video');
+            if (activeVideo) {
+                activeVideo.play();
             }
+        }
 
-            return {
-                list: suggestions.slice(0, 20), // Limit to 20 suggestions
-                from: CodeMirror.Pos(cursor.line, wordStart),
-                to: CodeMirror.Pos(cursor.line, end)
-            };
+        // Auto-advance carousel
+        setInterval(() => {
+            changeSlide(1);
+        }, 5000);
+
+        // Scroll series grid
+        function scrollGrid(amount) {
+            document.getElementById('seriesGrid').scrollBy({ left: amount, behavior: 'smooth' });
+        }
+
+        // Page navigation
+        function showSeriesSelection() {
+            document.getElementById('series-selection').style.display = 'block';
+            document.getElementById('ninjago-page').classList.remove('active');
+            document.getElementById('minecraft-page').classList.remove('active');
+            document.getElementById('wikix-page').classList.remove('active');
+            document.getElementById('gta-page').classList.remove('active');
+            document.getElementById('minecraft-super-szkola-page').classList.remove('active');
+            document.getElementById('gta-prawdziwe-zycie-page').classList.remove('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showNinjago() {
+            document.getElementById('series-selection').style.display = 'none';
+            document.getElementById('ninjago-page').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showMinecraft() {
+            document.getElementById('series-selection').style.display = 'none';
+            document.getElementById('minecraft-page').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showMinecraftSuperSzkola() {
+            document.getElementById('series-selection').style.display = 'none';
+            document.getElementById('minecraft-page').classList.remove('active');
+            document.getElementById('minecraft-super-szkola-page').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showWikix() {
+            document.getElementById('series-selection').style.display = 'none';
+            document.getElementById('wikix-page').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showGta() {
+            document.getElementById('series-selection').style.display = 'none';
+            document.getElementById('gta-page').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showGtaPrawdziweZycie() {
+            document.getElementById('series-selection').style.display = 'none';
+            document.getElementById('gta-page').classList.remove('active');
+            document.getElementById('gta-prawdziwe-zycie-page').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // ✅ DODANE FUNKCJE DLA PRZYCISKÓW W DOLNYM PASKU
+        function showSeriesGrid() {
+            // Przewiń do sekcji wyboru serii
+            const gridSection = document.querySelector('.series-grid-section');
+            if (gridSection) {
+                gridSection.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert('Sekcja wyboru serii');
+            }
+        }
+
+        function openSearch() {
+            const query = prompt("Czego szukasz? (np. Ninjago, Minecraft, Vlog)");
+            if (query) {
+                alert(`Szukam: "${query}"... (Funkcja w przygotowaniu)`);
+                // Tutaj można dodać logikę wyszukiwania
+            }
+        }
+
+        function toggleSound() {
+            alert('Dźwięk włączony/wyłączony');
+        }
+
+        // PREMIERE INFO FUNCTIONS
+        function showPremiereInfo(type) {
+            const modal = document.getElementById('premiereModal');
+            const logo = document.getElementById('premiereModalLogo');
+            const title = document.getElementById('premiereSeriesTitle');
+            const country = document.getElementById('premiereCountry');
+            const language = document.getElementById('premiereLanguage');
+            const station = document.getElementById('premiereStation');
+            const typeEl = document.getElementById('premiereType');
+            const tableBody = document.getElementById('premiereTableBody');
+            const tableHeader = document.getElementById('premiereTableHeader');
+            
+            let seriesData = {};
+            
+            if (type === 'nowa-generacja') {
+                logo.textContent = 'NINJAGO';
+                seriesData = {
+                    title: 'Ninjago Nowa Generacja - Sezon 2',
+                    country: 'Polska 🇵',
+                    language: 'Polski (dubbing)',
+                    station: 'Kanał YouTube WikiXa',
+                    type: 'Animacja',
+                    dates: [
+                        { month: 'Maj 2026', date: '2 maja 2026', time: '16:00' },
+                        { month: 'Maj 2026', date: '9 maja 2026', time: '16:00' },
+                        { month: 'Maj 2026', date: '16 maja 2026', time: '16:00' },
+                        { month: 'Maj 2026', date: '23 maja 2026', time: '16:00' }
+                    ]
+                };
+            } else if (type === 'polaczeni') {
+                logo.textContent = 'NINJAGO';
+                seriesData = {
+                    title: 'Ninjago Połączeni - Sezon 1',
+                    country: 'Polska 🇵🇱',
+                    language: 'Polski (dubbing)',
+                    station: 'Kanał YouTube WikiXa',
+                    type: 'Animacja',
+                    dates: [
+                        { month: 'Maj 2026', date: '25 maja 2026', time: '17:00' },
+                        { month: 'Czerwiec 2026', date: '1 czerwca 2026', time: '17:00' },
+                        { month: 'Czerwiec 2026', date: '8 czerwca 2026', time: '17:00' },
+                        { month: 'Czerwiec 2026', date: '15 czerwca 2026', time: '17:00' }
+                    ]
+                };
+            } else if (type === 'wikix') {
+                logo.textContent = 'WIKIX VLOG';
+                seriesData = {
+                    title: 'WikiX Vlog - Sezon 2026',
+                    country: 'Polska 🇵',
+                    language: 'Polski',
+                    station: 'Kanał YouTube WikiXa',
+                    type: 'Vlog',
+                    dates: [
+                        { month: 'Kwiecień 2026', date: '10 kwietnia 2026', language: 'Polski 🇵🇱', time: '17:00' },
+                        { month: 'Kwiecień 2026', date: '11 kwietnia 2026', language: 'Niemiecki 🇩', time: '19:00' },
+                        { month: 'Kwiecień 2026', date: '12 kwietnia 2026', language: 'Francuski 🇫', time: '19:00' },
+                        { month: 'Kwiecień 2026', date: '13 kwietnia 2026', language: 'Hiszpański 🇪🇸', time: '19:00' }
+                    ]
+                };
+            } else if (type === 'minecraft-super-szkola') {
+                logo.textContent = 'MINECRAFT';
+                seriesData = {
+                    title: 'Minecraft Super Szkoła - Sezon 3 Część 2',
+                    country: 'Polska 🇵🇱',
+                    language: 'Polski',
+                    station: 'Kanał YouTube WikiXa',
+                    type: 'Edukacja/Gry',
+                    dates: [
+                        { month: 'Maj 2026', date: '5 maja 2026', time: '15:00' }
+                    ]
+                };
+            } else if (type === 'gta-prawdziwe-zycie') {
+                logo.textContent = 'GTA';
+                seriesData = {
+                    title: 'GTA V Prawdziwe Życie - Sezon 2026',
+                    country: 'Polska 🇵🇱',
+                    language: 'Polski',
+                    station: 'Kanał YouTube WikiXa',
+                    type: 'Gry',
+                    dates: [
+                        { month: 'Maj 2026', date: '10 maja 2026', time: '16:00' }
+                    ]
+                };
+            }
+            
+            title.textContent = seriesData.title;
+            country.textContent = seriesData.country;
+            language.textContent = seriesData.language;
+            station.textContent = seriesData.station;
+            typeEl.textContent = seriesData.type;
+            
+            // Update table header based on type
+            if (type === 'wikix') {
+                tableHeader.innerHTML = `<th>Miesiąc</th><th>Data premiery</th><th>Język</th><th>Godzina</th>`;
+            } else {
+                tableHeader.innerHTML = `<th>Miesiąc</th><th>Data premiery</th><th>Godzina</th>`;
+            }
+            
+            // Clear and fill table
+            tableBody.innerHTML = '';
+            seriesData.dates.forEach(item => {
+                const row = document.createElement('tr');
+                if (type === 'wikix') {
+                    row.innerHTML = `<td>${item.month}</td><td>${item.date}</td><td>${item.language}</td><td>${item.time}</td>`;
+                } else {
+                    row.innerHTML = `<td>${item.month}</td><td>${item.date}</td><td>${item.time}</td>`;
+                }
+                tableBody.appendChild(row);
+            });
+            
+            modal.classList.add('active');
+        }
+
+        function closePremiereModal() {
+            document.getElementById('premiereModal').classList.remove('active');
+        }
+
+        // Close modal on background click
+        document.getElementById('premiereModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePremiereModal();
+            }
         });
 
-        // Enhanced anyword hint for other languages
-        CodeMirror.registerHelper("hint", "anyword-enhanced", function(editor, options) {
-            const cursor = editor.getCursor();
-            const line = editor.getLine(cursor.line);
-            const start = cursor.ch;
-            let end = cursor.ch;
-
-            // Find the start of the current word
-            let wordStart = start;
-            while (wordStart > 0 && /[\w$]/.test(line.charAt(wordStart - 1))) {
-                wordStart--;
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePremiereModal();
             }
-
-            const currentWord = line.slice(wordStart, end);
-            if (currentWord.length < 2) return null;
-
-            const content = editor.getValue();
-            const words = content.match(/\b\w{2,}\b/g) || [];
-            const uniqueWords = [...new Set(words)];
-
-            const suggestions = uniqueWords
-                .filter(word => word.toLowerCase().includes(currentWord.toLowerCase()) && word !== currentWord)
-                .map(word => ({
-                    text: word,
-                    displayText: word + ' (from document)',
-                    className: 'cm-word-hint'
-                }));
-
-            return {
-                list: suggestions.slice(0, 20), // Limit to 20 suggestions
-                from: CodeMirror.Pos(cursor.line, wordStart),
-                to: CodeMirror.Pos(cursor.line, end)
-            };
         });
 
-        // JavaScript-specific hints
-        CodeMirror.registerHelper("hint", "javascript-enhanced", function(editor, options) {
-            const cursor = editor.getCursor();
-            const line = editor.getLine(cursor.line);
-            const start = cursor.ch;
-            let end = cursor.ch;
+        // VIDEO MODAL FUNCTIONS
+        function playVideo(src, title = '') {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('modalVideo');
+            const titleEl = document.getElementById('modalVideoTitle');
+            
+            video.pause();
+            video.src = '';
+            video.load();
+            
+            setTimeout(() => {
+                video.src = src;
+                video.load();
+                titleEl.textContent = title;
+                modal.classList.add('active');
+                
+                video.play().catch(e => {
+                    console.log('Oczekiwanie na kliknięcie play:', e);
+                });
+            }, 50);
+        }
 
-            let wordStart = start;
-            while (wordStart > 0 && /[\w$]/.test(line.charAt(wordStart - 1))) {
-                wordStart--;
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('modalVideo');
+            video.pause();
+            video.src = '';
+            modal.classList.remove('active');
+        }
+
+        // Close modal on background click
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideoModal();
             }
-
-            const currentWord = line.slice(wordStart, end);
-            const suggestions = [];
-
-            // Extract JavaScript variables and functions
-            const content = editor.getValue();
-            const varMatches = content.match(/(?:var|let|const)\s+([a-zA-Z_][a-zA-Z0-9_]*)/g) || [];
-            const variables = varMatches.map(v => v.replace(/(var|let|const)\s+/, ''));
-
-            const funcMatches = content.match(/function\s+([a-zA-Z_][a-zA-Z0-9_]*)/g) || [];
-            const functions = funcMatches.map(f => f.replace('function ', ''));
-
-            // JavaScript built-ins
-            const jsBuiltins = [
-                'console.log', 'console.error', 'console.warn', 'console.info',
-                'document.getElementById', 'document.querySelector', 'document.querySelectorAll',
-                'window.alert', 'window.confirm', 'window.prompt', 'window.location',
-                'Array', 'Object', 'String', 'Number', 'Boolean', 'Date', 'Math', 'JSON',
-                'parseInt', 'parseFloat', 'isNaN', 'isFinite', 'typeof', 'instanceof',
-                'setTimeout', 'setInterval', 'clearTimeout', 'clearInterval'
-            ];
-
-            // Add variables
-            variables.forEach(variable => {
-                if (variable.toLowerCase().includes(currentWord.toLowerCase())) {
-                    suggestions.push({
-                        text: variable,
-                        displayText: variable + ' (variable)',
-                        className: 'cm-variable-hint'
-                    });
-                }
-            });
-
-            // Add functions
-            functions.forEach(func => {
-                if (func.toLowerCase().includes(currentWord.toLowerCase())) {
-                    suggestions.push({
-                        text: func + '()',
-                        displayText: func + '() (function)',
-                        className: 'cm-function-hint'
-                    });
-                }
-            });
-
-            // Add built-ins
-            jsBuiltins.forEach(builtin => {
-                if (builtin.toLowerCase().includes(currentWord.toLowerCase())) {
-                    suggestions.push({
-                        text: builtin,
-                        displayText: builtin + ' (JavaScript built-in)',
-                        className: 'cm-builtin-hint'
-                    });
-                }
-            });
-
-            return {
-                list: suggestions,
-                from: CodeMirror.Pos(cursor.line, wordStart),
-                to: CodeMirror.Pos(cursor.line, end)
-            };
         });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeVideoModal();
+            }
+        });
+
+        // DOWNLOAD FUNCTION
+        function downloadFile(url, filename) {
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            console.log('Pobieranie:', filename);
+        }
+
+        // Countdown for Nowa Generacja Season 2
+        function startCountdownNG() {
+            const countDownDate = new Date("May 2, 2026 00:00:00").getTime();
+            
+            setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("ng-days").innerHTML = days < 10 ? "0" + days : days;
+                document.getElementById("ng-hours").innerHTML = hours < 10 ? "0" + hours : hours;
+                document.getElementById("ng-mins").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("ng-secs").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+            }, 1000);
+        }
+
+        // Countdown for Połączeni Season 1
+        function startCountdownNP() {
+            const countDownDate = new Date("May 25, 2026 00:00:00").getTime();
+            
+            setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("np-days").innerHTML = days < 10 ? "0" + days : days;
+                document.getElementById("np-hours").innerHTML = hours < 10 ? "0" + hours : hours;
+                document.getElementById("np-mins").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("np-secs").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+            }, 1000);
+        }
+
+        // Countdown for WikiX Vlog - April 10, 2026
+        function startCountdownWikiX() {
+            const countDownDate = new Date("April 10, 2026 18:00:00").getTime();
+            
+            setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("wikix-days").innerHTML = days < 10 ? "0" + days : days;
+                document.getElementById("wikix-hours").innerHTML = hours < 10 ? "0" + hours : hours;
+                document.getElementById("wikix-mins").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("wikix-secs").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+            }, 1000);
+        }
+
+        // Countdown for Minecraft Super Szkoła - May 5, 2026
+        function startCountdownMinecraftSuperSzkola() {
+            const countDownDate = new Date("May 5, 2026 15:00:00").getTime();
+            
+            setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("mss-days").innerHTML = days < 10 ? "0" + days : days;
+                document.getElementById("mss-hours").innerHTML = hours < 10 ? "0" + hours : hours;
+                document.getElementById("mss-mins").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("mss-secs").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+            }, 1000);
+        }
+
+        // Countdown for GTA Prawdziwe Życie - May 10, 2026
+        function startCountdownGtaPrawdziweZycie() {
+            const countDownDate = new Date("May 10, 2026 16:00:00").getTime();
+            
+            setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("gpz-days").innerHTML = days < 10 ? "0" + days : days;
+                document.getElementById("gpz-hours").innerHTML = hours < 10 ? "0" + hours : hours;
+                document.getElementById("gpz-mins").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("gpz-secs").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+            }, 1000);
+        }
+
+        // Initialize
+        createStars();
+        startCountdownNG();
+        startCountdownNP();
+        startCountdownWikiX();
+        startCountdownMinecraftSuperSzkola();
+        startCountdownGtaPrawdziweZycie();
     </script>
-
-    <!-- Keep external linting libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jshint/2.13.6/jshint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/csslint/1.0.5/csslint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsonlint/1.6.0/jsonlint.min.js"></script>
 </body>
 </html>
