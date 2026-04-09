@@ -373,6 +373,16 @@
             color: #666;
             cursor: pointer;
             transition: color 0.3s, transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-icon span {
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
         }
 
         .nav-icon:hover, .nav-icon.active {
@@ -409,16 +419,189 @@
             .main-carousel {
                 padding: 0 60px;
             }
+            
+            .nav-icon span {
+                font-size: 0.65rem;
+            }
         }
 
         /* Other Pages */
-        .ninjago-page, .minecraft-page, .wikix-page, .gta-page, .minecraft-super-szkola-page, .gta-prawdziwe-zycie-page, .minecraft-rodzinka-page {
+        .ninjago-page, .minecraft-page, .wikix-page, .gta-page, .minecraft-super-szkola-page, .gta-prawdziwe-zycie-page, .minecraft-rodzinka-page, .series-page, .games-page {
             display: none;
             background-color: var(--bg-black);
         }
 
-        .ninjago-page.active, .minecraft-page.active, .wikix-page.active, .gta-page.active, .minecraft-super-szkola-page.active, .gta-prawdziwe-zycie-page.active, .minecraft-rodzinka-page.active {
+        .ninjago-page.active, .minecraft-page.active, .wikix-page.active, .gta-page.active, .minecraft-super-szkola-page.active, .gta-prawdziwe-zycie-page.active, .minecraft-rodzinka-page.active, .series-page.active, .games-page.active {
             display: block;
+        }
+
+        /* SERIES PAGE STYLES */
+        .series-page {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #1a0505 0%, #0a0202 100%);
+            padding: 100px 20px 120px 20px;
+        }
+
+        .series-page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .series-page-title {
+            font-family: 'Bangers', cursive;
+            font-size: 4rem;
+            color: var(--ninjago-yellow);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .series-page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .series-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .series-list-item {
+            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 3px solid transparent;
+        }
+
+        .series-list-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 102, 204, 0.4);
+            border-color: var(--space-blue);
+        }
+
+        .series-list-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .series-list-name {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--text-white);
+            margin-bottom: 10px;
+        }
+
+        .series-list-desc {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 20px;
+        }
+
+        .series-list-btn {
+            padding: 10px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        /* GAMES PAGE STYLES */
+        .games-page {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a0505 100%);
+            padding: 100px 20px 120px 20px;
+        }
+
+        .games-page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .games-page-title {
+            font-family: 'Bangers', cursive;
+            font-size: 4rem;
+            color: var(--ninjago-yellow);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .games-page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .game-card {
+            background: linear-gradient(135deg, #2d1b1b 0%, #1a0f0f 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 3px solid transparent;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 102, 0, 0.4);
+            border-color: var(--gta-orange);
+        }
+
+        .game-card-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #ff6600 0%, #cc5200 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .game-card-content {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .game-card-title {
+            font-family: 'Bangers', cursive;
+            font-size: 1.8rem;
+            color: var(--text-white);
+            margin-bottom: 10px;
+        }
+
+        .game-card-desc {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .game-card-btn {
+            padding: 12px 30px;
+            background: var(--gta-orange);
+            color: #fff;
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .game-card-btn:hover {
+            transform: scale(1.05);
         }
 
         /* NINJAGO PAGE STYLES */
@@ -1723,13 +1906,127 @@
 
         <!-- Bottom Navigation -->
         <nav class="bottom-nav-bar">
-            <div class="nav-icon" onclick="showNinjago()" title="Oglądaj">▶</div>
-            <div class="nav-icon" onclick="showSeriesGrid()" title="Przeglądaj">⊞</div>
-            <div class="nav-icon" onclick="openSearch()" title="Szukaj">🔍</div>
+            <div class="nav-icon" onclick="showSeriesSelection()" title="Strona główna">🏠<span>Start</span></div>
+            <div class="nav-icon" onclick="showSeriesPage()" title="Moje Wszystkie Serie">📺<span>Moje Wszystkie Serie</span></div>
+            <div class="nav-icon" onclick="showGamesPage()" title="Moje Gry">🎮<span>Moje Własne Gry</span></div>
+            <div class="nav-icon" onclick="openSearch()" title="Szukaj">🔍<span>Szukaj</span></div>
         </nav>
 
         <!-- Legal Stuff -->
         <div class="legal-stuff" onclick="alert('Informacje prawne')">Legal stuff</div>
+    </main>
+
+    <!-- SERIES PAGE -->
+    <main id="series-page" class="series-page">
+        <div class="series-page-header">
+            <h1 class="series-page-title">WSZYSTKIE SERIE</h1>
+            <p class="series-page-subtitle">Odkryj wszystkie dostępne serie na MJKKids</p>
+        </div>
+        
+        <div class="series-list">
+            <div class="series-list-item" onclick="showNinjago()">
+                <div class="series-list-icon">🥷</div>
+                <h2 class="series-list-name">Ninjago</h2>
+                <p class="series-list-desc">Fanowskie przygody w świecie Ninjago z żywiołami i smokami</p>
+                <button class="series-list-btn">OGLĄDAJ →</button>
+            </div>
+            
+            <div class="series-list-item" onclick="showMinecraftSuperSzkola()">
+                <div class="series-list-icon">⛏️</div>
+                <h2 class="series-list-name">Minecraft Super Szkoła</h2>
+                <p class="series-list-desc">Edukacyjne przygody w świecie Minecraft</p>
+                <button class="series-list-btn">OGLĄDAJ →</button>
+            </div>
+            
+            <div class="series-list-item" onclick="showMinecraftRodzinka()">
+                <div class="series-list-icon">👨‍👩‍👧‍👦</div>
+                <h2 class="series-list-name">Minecraft Rodzinka</h2>
+                <p class="series-list-desc">Rodzinne przygody w blokowym świecie</p>
+                <button class="series-list-btn">OGLĄDAJ →</button>
+            </div>
+            
+            <div class="series-list-item" onclick="showWikix()">
+                <div class="series-list-icon">📹</div>
+                <h2 class="series-list-name">MJK Vlog</h2>
+                <p class="series-list-desc">Vlogi i relacje na żywo z życia WikiXa</p>
+                <button class="series-list-btn">OGLĄDAJ →</button>
+            </div>
+            
+            <div class="series-list-item" onclick="showGtaPrawdziweZycie()">
+                <div class="series-list-icon">🚗</div>
+                <h2 class="series-list-name">GTA Prawdziwe Życie</h2>
+                <p class="series-list-desc">Przygody w świecie GTA V</p>
+                <button class="series-list-btn">OGLĄDAJ →</button>
+            </div>
+        </div>
+        
+        <button class="back-btn" onclick="showSeriesSelection()">← POWRÓT</button>
+    </main>
+
+    <!-- GAMES PAGE -->
+    <main id="games-page" class="games-page">
+        <div class="games-page-header">
+            <h1 class="games-page-title">GRY</h1>
+            <p class="games-page-subtitle">Graj w najlepsze gry online!</p>
+        </div>
+        
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="game-card-image">🎮</div>
+                <div class="game-card-content">
+                    <h2 class="game-card-title">Ninjago: Spinjitzu</h2>
+                    <p class="game-card-desc">Obróń Ninjago przed złem używając mocy Spinjitzu!</p>
+                    <button class="game-card-btn">GRAJ TERAZ</button>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <div class="game-card-image" style="background: linear-gradient(135deg, #5cb85c, #3d8b3d);">⛏️</div>
+                <div class="game-card-content">
+                    <h2 class="game-card-title">Minecraft: Builder</h2>
+                    <p class="game-card-desc">Buduj niesamowite konstrukcje w Minecraft!</p>
+                    <button class="game-card-btn">GRAJ TERAZ</button>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <div class="game-card-image" style="background: linear-gradient(135deg, #0066cc, #003d7a);">🏎️</div>
+                <div class="game-card-content">
+                    <h2 class="game-card-title">GTA: Racing</h2>
+                    <p class="game-card-desc">Ścigaj się po ulicach Los Santos!</p>
+                    <button class="game-card-btn">GRAJ TERAZ</button>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <div class="game-card-image" style="background: linear-gradient(135deg, #9b30ff, #6a0dad);">🎯</div>
+                <div class="game-card-content">
+                    <h2 class="game-card-title">Ninjago: Archer</h2>
+                    <p class="game-card-desc">Trafiaj w cele z łuku mistrza Ninjago!</p>
+                    <button class="game-card-btn">GRAJ TERAZ</button>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <div class="game-card-image" style="background: linear-gradient(135deg, #ff6600, #cc5200);">🚁</div>
+                <div class="game-card-content">
+                    <h2 class="game-card-title">GTA: Helicopter</h2>
+                    <p class="game-card-desc">Lataj helikopterem nad miastem!</p>
+                    <button class="game-card-btn">GRAJ TERAZ</button>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <div class="game-card-image" style="background: linear-gradient(135deg, #4CAF50, #2E7D32);">🌍</div>
+                <div class="game-card-content">
+                    <h2 class="game-card-title">Minecraft: Explorer</h2>
+                    <p class="game-card-desc">Odkrywaj nowe światy i biomy!</p>
+                    <button class="game-card-btn">GRAJ TERAZ</button>
+                </div>
+            </div>
+        </div>
+        
+        <button class="back-btn" onclick="showSeriesSelection()">← POWRÓT</button>
     </main>
 
     <!-- NINJAGO PAGE -->
@@ -2358,6 +2655,20 @@
             document.getElementById('minecraft-super-szkola-page').classList.remove('active');
             document.getElementById('minecraft-rodzinka-page').classList.remove('active');
             document.getElementById('gta-prawdziwe-zycie-page').classList.remove('active');
+            document.getElementById('series-page').classList.remove('active');
+            document.getElementById('games-page').classList.remove('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showSeriesPage() {
+            document.getElementById('series-selection').style.display = 'none';
+            document.getElementById('series-page').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showGamesPage() {
+            document.getElementById('series-selection').style.display = 'none';
+            document.getElementById('games-page').classList.add('active');
             window.scrollTo(0, 0);
         }
 
@@ -2482,7 +2793,7 @@
                     station: 'Kanał YouTube WikiXa',
                     type: 'Vlog',
                     dates: [
-                        { month: 'Kwiecień 2026', date: '10 kwietnia 2026', language: 'Polski 🇵🇱', time: '17:00' },
+                        { month: 'Kwiecień 2026', date: '10 kwietnia 2026', language: 'Polski 🇵', time: '17:00' },
                         { month: 'Kwiecień 2026', date: '11 kwietnia 2026', language: 'Niemiecki 🇩', time: '19:00' },
                         { month: 'Kwiecień 2026', date: '12 kwietnia 2026', language: 'Francuski 🇫', time: '19:00' },
                         { month: 'Kwiecień 2026', date: '13 kwietnia 2026', language: 'Hiszpański 🇪', time: '19:00' }
@@ -2757,5 +3068,5 @@
         startCountdownMinecraftRodzinka();
         startCountdownGtaPrawdziweZycie();
     </script>
-</body>
+</body> 
 </html>
