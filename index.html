@@ -412,12 +412,12 @@
         }
 
         /* Other Pages */
-        .ninjago-page, .minecraft-page, .wikix-page, .gta-page, .minecraft-super-szkola-page, .gta-prawdziwe-zycie-page {
+        .ninjago-page, .minecraft-page, .wikix-page, .gta-page, .minecraft-super-szkola-page, .gta-prawdziwe-zycie-page, .minecraft-rodzinka-page {
             display: none;
             background-color: var(--bg-black);
         }
 
-        .ninjago-page.active, .minecraft-page.active, .wikix-page.active, .gta-page.active, .minecraft-super-szkola-page.active, .gta-prawdziwe-zycie-page.active {
+        .ninjago-page.active, .minecraft-page.active, .wikix-page.active, .gta-page.active, .minecraft-super-szkola-page.active, .gta-prawdziwe-zycie-page.active, .minecraft-rodzinka-page.active {
             display: block;
         }
 
@@ -996,6 +996,180 @@
         }
 
         .btn-minecraft-super-szkola-premiere-info:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 204, 0, 0.4);
+        }
+
+        /* MINECRAFT RODZINKA PAGE STYLES */
+        .minecraft-rodzinka-page {
+            background: linear-gradient(180deg, #4CAF50 0%, #2E7D32 50%, #000 100%);
+            min-height: 100vh;
+        }
+
+        .minecraft-rodzinka-header {
+            background: linear-gradient(180deg, #4CAF50 0%, #2E7D32 100%);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .minecraft-rodzinka-logo {
+            font-family: 'Bangers', cursive;
+            font-size: 5rem;
+            color: var(--text-white);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 3px 3px 0 #000;
+            margin-bottom: 20px;
+        }
+
+        .minecraft-rodzinka-section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .minecraft-rodzinka-title {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            color: var(--ninjago-yellow);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .minecraft-rodzinka-video-container {
+            max-width: 900px;
+            margin: 30px auto;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid var(--ninjago-yellow);
+        }
+
+        .minecraft-rodzinka-video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a3300 0%, #0d1a00 100%);
+            cursor: pointer;
+        }
+
+        .minecraft-rodzinka-play-button {
+            width: 80px;
+            height: 80px;
+            background: var(--ninjago-yellow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #000;
+        }
+
+        .minecraft-rodzinka-countdown-container {
+            background: rgba(0,0,0,0.8);
+            border: 3px solid var(--ninjago-yellow);
+            border-radius: 15px;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .minecraft-rodzinka-countdown-title {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--ninjago-yellow);
+            margin-bottom: 30px;
+        }
+
+        .minecraft-rodzinka-countdown-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .minecraft-rodzinka-countdown-box {
+            background: #4CAF50;
+            padding: 20px 30px;
+            border-radius: 10px;
+            min-width: 100px;
+        }
+
+        .minecraft-rodzinka-countdown-number {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            color: var(--ninjago-yellow);
+            display: block;
+        }
+
+        .minecraft-rodzinka-countdown-label {
+            font-size: 0.9rem;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .minecraft-rodzinka-posters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .minecraft-rodzinka-poster-item {
+            aspect-ratio: 2/3;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid var(--ninjago-yellow);
+            position: relative;
+        }
+
+        .minecraft-rodzinka-poster-download-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .minecraft-rodzinka-back-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            padding: 15px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .btn-minecraft-rodzinka-premiere-info {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: var(--ninjago-yellow);
+            color: #000;
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-minecraft-rodzinka-premiere-info:hover {
             transform: scale(1.05);
             box-shadow: 0 5px 20px rgba(255, 204, 0, 0.4);
         }
@@ -1894,6 +2068,94 @@
         <button class="minecraft-super-szkola-back-btn" onclick="showSeriesSelection()">← POWRÓT</button>
     </main>
 
+    <!-- MINECRAFT RODZINKA PAGE -->
+    <main id="minecraft-rodzinka-page" class="minecraft-rodzinka-page">
+        <header class="minecraft-rodzinka-header">
+            <div class="minecraft-rodzinka-logo">MINECRAFT RODZINKA</div>
+            <p>Przygody całej rodziny w świecie Minecraft! Budujcie razem i odkrywajcie nowe światy!</p>
+        </header>
+
+        <!-- Main Video -->
+        <section class="minecraft-rodzinka-section">
+            <div class="minecraft-rodzinka-video-container">
+                <div class="minecraft-rodzinka-video-placeholder" onclick="playVideo('video/minecraft_rodzinka_intro.mp4', 'Minecraft Rodzinka - Intro')">
+                    <div class="minecraft-rodzinka-play-button">▶</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW SEASON SECTION -->
+        <section class="minecraft-rodzinka-section" style="background:linear-gradient(180deg,#000,#1a3300);">
+            <h2 class="minecraft-rodzinka-title">NOWY SEZON</h2>
+            <h3 style="font-family:'Bangers',cursive; font-size:2.5rem; color:#fff; margin-bottom:30px;">Minecraft Rodzinka - Sezon 2026</h3>
+            
+            <div class="minecraft-rodzinka-countdown-container">
+                <h3 class="minecraft-rodzinka-countdown-title">PREMIERA ZA:</h3>
+                <div class="minecraft-rodzinka-countdown-boxes" id="countdown-minecraft-rodzinka">
+                    <div class="minecraft-rodzinka-countdown-box">
+                        <span class="minecraft-rodzinka-countdown-number" id="mr-days">00</span>
+                        <span class="minecraft-rodzinka-countdown-label">DNI</span>
+                    </div>
+                    <div class="minecraft-rodzinka-countdown-box">
+                        <span class="minecraft-rodzinka-countdown-number" id="mr-hours">00</span>
+                        <span class="minecraft-rodzinka-countdown-label">GODZ</span>
+                    </div>
+                    <div class="minecraft-rodzinka-countdown-box">
+                        <span class="minecraft-rodzinka-countdown-number" id="mr-mins">00</span>
+                        <span class="minecraft-rodzinka-countdown-label">MIN</span>
+                    </div>
+                    <div class="minecraft-rodzinka-countdown-box">
+                        <span class="minecraft-rodzinka-countdown-number" id="mr-secs">00</span>
+                        <span class="minecraft-rodzinka-countdown-label">SEK</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-minecraft-rodzinka-premiere-info" onclick="showPremiereInfo('minecraft-rodzinka')">
+                ℹ️ INFORMACJE O PREMIERZE
+            </button>
+
+            <div class="minecraft-rodzinka-video-container">
+                <div class="minecraft-rodzinka-video-placeholder" onclick="playVideo('video/minecraft_rodzinka_zwiastun.mp4', 'Zwiastun Minecraft Rodzinka')">
+                    <div style="text-align:center; color:#fff;">
+                        <div class="minecraft-rodzinka-play-button" style="margin:0 auto 20px auto;">▶</div>
+                        <h3 style="font-family:'Bangers',cursive; font-size:2rem;">ZWIASTUN SEZONU</h3>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-family:'Bangers',cursive; font-size:2rem; color:var(--ninjago-yellow); margin:40px 0 20px 0;">MATERIAŁY DO POBRANIA</h3>
+            <div class="minecraft-rodzinka-posters-grid">
+                <div class="minecraft-rodzinka-poster-item">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #4CAF50, #2E7D32);">
+                        <span style="font-family:'Bangers',cursive; font-size:1.5rem; color:#fff;">Plakat 1</span>
+                    </div>
+                    <button class="minecraft-rodzinka-poster-download-btn" onclick="downloadFile('img/minecraft_rodzinka1.jpg', 'minecraft_rodzinka1.jpg')">Pobierz</button>
+                </div>
+                <div class="minecraft-rodzinka-poster-item">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #4CAF50, #2E7D32);">
+                        <span style="font-family:'Bangers',cursive; font-size:1.5rem; color:#fff;">Plakat 2</span>
+                    </div>
+                    <button class="minecraft-rodzinka-poster-download-btn" onclick="downloadFile('img/minecraft_rodzinka2.jpg', 'minecraft_rodzinka2.jpg')">Pobierz</button>
+                </div>
+                <div class="minecraft-rodzinka-poster-item">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#222;">
+                        <span style="font-family:'Bangers',cursive; font-size:1.5rem; color:#666;">Wkrótce</span>
+                    </div>
+                    <button class="minecraft-rodzinka-poster-download-btn" onclick="alert('Wkrótce dostępne!')">Pobierz Wkrótce</button>
+                </div>
+                <div class="minecraft-rodzinka-poster-item">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#222;">
+                        <span style="font-family:'Bangers',cursive; font-size:1.5rem; color:#666;">Wkrótce</span>
+                    </div>
+                    <button class="minecraft-rodzinka-poster-download-btn" onclick="alert('Wkrótce dostępne!')">Pobierz Wkrótce</button>
+                </div>
+            </div>
+        </section>
+
+        <button class="minecraft-rodzinka-back-btn" onclick="showSeriesSelection()">← POWRÓT</button>
+    </main>
+
     <!-- GTA PRAWDZIWE ŻYCIE PAGE -->
     <main id="gta-prawdziwe-zycie-page" class="gta-prawdziwe-zycie-page">
         <header class="gta-prawdziwe-zycie-header">
@@ -1986,10 +2248,15 @@
     <main id="minecraft-page" class="minecraft-page">
         <div style="padding: 100px 20px; text-align: center;">
             <h1 style="font-family: 'Bangers', cursive; font-size: 4rem; color: #5cb85c;">MINECRAFT</h1>
-            <button onclick="showMinecraftSuperSzkola()" style="margin-top: 30px; padding: 15px 30px; background: #5cb85c; border: none; border-radius: 50px; font-family: 'Bangers', cursive; font-size: 1.2rem; cursor: pointer;">
-                ODKRYJ SUPER SZKOŁĘ →
-            </button>
-            <button onclick="showSeriesSelection()" style="margin-top: 15px; padding: 15px 30px; background: #3d8b3d; border: none; border-radius: 50px; font-family: 'Bangers', cursive; font-size: 1.2rem; cursor: pointer;">
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
+                <button onclick="showMinecraftSuperSzkola()" style="padding: 15px 30px; background: #5cb85c; border: none; border-radius: 50px; font-family: 'Bangers', cursive; font-size: 1.2rem; cursor: pointer; transition: transform 0.3s;">
+                    ODKRYJ SUPER SZKOŁĘ →
+                </button>
+                <button onclick="showMinecraftRodzinka()" style="padding: 15px 30px; background: #4CAF50; border: none; border-radius: 50px; font-family: 'Bangers', cursive; font-size: 1.2rem; cursor: pointer; transition: transform 0.3s;">
+                    ODKRYJ RODZINKĘ →
+                </button>
+            </div>
+            <button onclick="showSeriesSelection()" style="margin-top: 30px; padding: 15px 30px; background: #3d8b3d; border: none; border-radius: 50px; font-family: 'Bangers', cursive; font-size: 1.2rem; cursor: pointer;">
                 ← POWRÓT DO WYBORU SERII
             </button>
         </div>
@@ -2089,6 +2356,7 @@
             document.getElementById('wikix-page').classList.remove('active');
             document.getElementById('gta-page').classList.remove('active');
             document.getElementById('minecraft-super-szkola-page').classList.remove('active');
+            document.getElementById('minecraft-rodzinka-page').classList.remove('active');
             document.getElementById('gta-prawdziwe-zycie-page').classList.remove('active');
             window.scrollTo(0, 0);
         }
@@ -2109,6 +2377,13 @@
             document.getElementById('series-selection').style.display = 'none';
             document.getElementById('minecraft-page').classList.remove('active');
             document.getElementById('minecraft-super-szkola-page').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showMinecraftRodzinka() {
+            document.getElementById('series-selection').style.display = 'none';
+            document.getElementById('minecraft-page').classList.remove('active');
+            document.getElementById('minecraft-rodzinka-page').classList.add('active');
             window.scrollTo(0, 0);
         }
 
@@ -2210,7 +2485,7 @@
                         { month: 'Kwiecień 2026', date: '10 kwietnia 2026', language: 'Polski 🇵🇱', time: '17:00' },
                         { month: 'Kwiecień 2026', date: '11 kwietnia 2026', language: 'Niemiecki 🇩', time: '19:00' },
                         { month: 'Kwiecień 2026', date: '12 kwietnia 2026', language: 'Francuski 🇫', time: '19:00' },
-                        { month: 'Kwiecień 2026', date: '13 kwietnia 2026', language: 'Hiszpański 🇪🇸', time: '19:00' }
+                        { month: 'Kwiecień 2026', date: '13 kwietnia 2026', language: 'Hiszpański 🇪', time: '19:00' }
                     ]
                 };
             } else if (type === 'minecraft-super-szkola') {
@@ -2223,6 +2498,18 @@
                     type: 'Edukacja/Gry',
                     dates: [
                         { month: 'Maj 2026', date: '5 maja 2026', time: '15:00' }
+                    ]
+                };
+            } else if (type === 'minecraft-rodzinka') {
+                logo.textContent = 'MINECRAFT';
+                seriesData = {
+                    title: 'Minecraft Rodzinka - Sezon 2026',
+                    country: 'Polska 🇵🇱',
+                    language: 'Polski',
+                    station: 'Kanał YouTube WikiXa',
+                    type: 'Gry/Rodzina',
+                    dates: [
+                        { month: 'Maj 2026', date: '15 maja 2026', time: '15:00' }
                     ]
                 };
             } else if (type === 'gta-prawdziwe-zycie') {
@@ -2421,6 +2708,26 @@
             }, 1000);
         }
 
+        // Countdown for Minecraft Rodzinka - May 15, 2026
+        function startCountdownMinecraftRodzinka() {
+            const countDownDate = new Date("May 15, 2026 15:00:00").getTime();
+            
+            setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("mr-days").innerHTML = days < 10 ? "0" + days : days;
+                document.getElementById("mr-hours").innerHTML = hours < 10 ? "0" + hours : hours;
+                document.getElementById("mr-mins").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("mr-secs").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+            }, 1000);
+        }
+
         // Countdown for GTA Prawdziwe Życie - May 10, 2026
         function startCountdownGtaPrawdziweZycie() {
             const countDownDate = new Date("May 10, 2026 16:00:00").getTime();
@@ -2447,6 +2754,7 @@
         startCountdownNP();
         startCountdownWikiX();
         startCountdownMinecraftSuperSzkola();
+        startCountdownMinecraftRodzinka();
         startCountdownGtaPrawdziweZycie();
     </script>
 </body>
