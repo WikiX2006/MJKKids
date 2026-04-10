@@ -23,6 +23,8 @@
             --minecraft-dark: #3d8b3d;
             --gta-orange: #ff6600;
             --gta-dark: #cc5200;
+            --blog-purple: #8e44ad;
+            --photo-cyan: #00bcd4;
         }
         
         * { 
@@ -1904,11 +1906,34 @@
             </div>
         </section>
 
+        <!-- NOWA SEKCJA: WYBIERZ SWÓJ BLOG I STRONĘ -->
+        <section class="series-grid-section">
+            <h2 class="series-grid-title">WYBIERZ SWÓJ BLOG I STRONĘ</h2>
+            <div class="series-grid" id="blogGrid">
+                <div class="series-card" onclick="showBlog()">
+                    <div class="series-card-placeholder" style="background: linear-gradient(135deg, #8e44ad 0%, #6c3483 100%);">
+                        <div class="series-card-icon">📝</div>
+                        <div class="series-card-name">Blog</div>
+                    </div>
+                </div>
+
+                <div class="series-card" onclick="showSzczecin2026()">
+                    <div class="series-card-placeholder" style="background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);">
+                        <div class="series-card-icon">📷</div>
+                        <div class="series-card-name">SZCZECIN 2026</div>
+                    </div>
+                </div>
+
+                <div class="series-card">
+                    <div class="series-card-arrow" onclick="scrollGrid(200, 'blogGrid')">›</div>
+                </div>
+            </div>
+        </section>
+
         <!-- Bottom Navigation -->
         <nav class="bottom-nav-bar">
             <div class="nav-icon" onclick="showSeriesSelection()" title="Strona główna">🏠<span>Start</span></div>
             <div class="nav-icon" onclick="showSeriesPage()" title="Moje Wszystkie Serie">📺<span>Moje Wszystkie Serie</span></div>
-            <div class="nav-icon" onclick="showGamesPage()" title="Moje Gry">🎮<span>Moje Własne Gry</span></div>
             <div class="nav-icon" onclick="openSearch()" title="Szukaj">🔍<span>Szukaj</span></div>
         </nav>
 
@@ -1939,7 +1964,7 @@
             </div>
             
             <div class="series-list-item" onclick="showMinecraftRodzinka()">
-                <div class="series-list-icon">👨👩‍‍👦</div>
+                <div class="series-list-icon">👨👩‍👦</div>
                 <h2 class="series-list-name">Minecraft Rodzinka</h2>
                 <p class="series-list-desc">Rodzinne przygody w blokowym świecie</p>
                 <button class="series-list-btn">OGLĄDAJ →</button>
@@ -1963,23 +1988,6 @@
         <button class="back-btn" onclick="showSeriesSelection()">← POWRÓT</button>
     </main>
 
-    <!-- GAMES PAGE -->
-    <main id="games-page" class="games-page">
-        <div class="games-page-header">
-            <h1 class="games-page-title">GRY</h1>
-            <p class="games-page-subtitle">Pobierz Grę Wkrótce</p>
-        </div>
-        
-        <div class="games-grid">
-            <div class="game-card">
-                <div class="game-card-image">🎮</div>
-                <div class="game-card-content">
-                    <h2 class="game-card-title">GRAND THEFT KATOWICE - WKRÓTCE(2027)</h2>
-                    <p class="game-card-desc">PIERWSZA GRA MJK OSADZONA W KATOWICACH</p>
-                    <button class="game-card-btn">POBIERZ WKKRÓTCE (2027)</button>
-                </div>
-            </div>
-        </div>
         
         <button class="back-btn" onclick="showSeriesSelection()">← POWRÓT</button>
     </main>
@@ -2579,8 +2587,8 @@
         }, 5000);
 
         // Scroll series grid
-        function scrollGrid(amount) {
-            document.getElementById('seriesGrid').scrollBy({ left: amount, behavior: 'smooth' });
+        function scrollGrid(amount, gridId = 'seriesGrid') {
+            document.getElementById(gridId).scrollBy({ left: amount, behavior: 'smooth' });
         }
 
         // Page navigation
@@ -2608,6 +2616,15 @@
             document.getElementById('series-selection').style.display = 'none';
             document.getElementById('games-page').classList.add('active');
             window.scrollTo(0, 0);
+        }
+
+        // NOWE FUNKCJE DLA BLOGA I SZCZECIN 2026
+        function showBlog() {
+            alert('Strona Bloga - w przygotowaniu!');
+        }
+
+        function showSzczecin2026() {
+            alert('Strona Szczecin 2026 - w przygotowaniu!');
         }
 
         function showNinjago() {
