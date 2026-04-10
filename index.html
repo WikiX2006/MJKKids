@@ -2168,28 +2168,10 @@
                 </div>
             </div>
 
-            <!-- COUNTDOWN -->
+            <!-- COUNTDOWN REMOVED, TEXT KEPT -->
             <div class="wikix-countdown-box-new">
                 <h3 class="wikix-countdown-title-new">Szczecin już się będziemy niedługo widzieć😃 obejrzyj teraz Sezon 2
                 Vloga</h3>
-                <div class="wikix-countdown-boxes-new" id="countdown-wikix">
-                    <div class="wikix-countdown-box-new">
-                        <span class="wikix-countdown-number-new" id="wikix-days">00</span>
-                        <span class="wikix-countdown-label-new">DNI</span>
-                    </div>
-                    <div class="wikix-countdown-box-new">
-                        <span class="wikix-countdown-number-new" id="wikix-hours">00</span>
-                        <span class="wikix-countdown-label-new">GODZ</span>
-                    </div>
-                    <div class="wikix-countdown-box-new">
-                        <span class="wikix-countdown-number-new" id="wikix-mins">00</span>
-                        <span class="wikix-countdown-label-new">MIN</span>
-                    </div>
-                    <div class="wikix-countdown-box-new">
-                        <span class="wikix-countdown-number-new" id="wikix-secs">00</span>
-                        <span class="wikix-countdown-label-new">SEK</span>
-                    </div>
-                </div>
             </div>
 
             <button class="btn-wikix-premiere-info" onclick="showPremiereInfo('wikix')">
@@ -2935,26 +2917,6 @@
             }, 1000);
         }
 
-        // Countdown for WikiX Vlog - April 10, 2026
-        function startCountdownWikiX() {
-            const countDownDate = new Date("April 10, 2026 18:00:00").getTime();
-            
-            setInterval(function() {
-                const now = new Date().getTime();
-                const distance = countDownDate - now;
-                
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                
-                document.getElementById("wikix-days").innerHTML = days < 10 ? "0" + days : days;
-                document.getElementById("wikix-hours").innerHTML = hours < 10 ? "0" + hours : hours;
-                document.getElementById("wikix-mins").innerHTML = minutes < 10 ? "0" + minutes : minutes;
-                document.getElementById("wikix-secs").innerHTML = seconds < 10 ? "0" + seconds : seconds;
-            }, 1000);
-        }
-
         // Countdown for Minecraft Super Szkoła - May 5, 2026
         function startCountdownMinecraftSuperSzkola() {
             const countDownDate = new Date("May 5, 2026 15:00:00").getTime();
@@ -3019,7 +2981,7 @@
         createStars();
         startCountdownNG();
         startCountdownNP();
-        startCountdownWikiX();
+        // startCountdownWikiX(); // Usunięte, bo odliczanie zostało usunięte z HTML
         startCountdownMinecraftSuperSzkola();
         startCountdownMinecraftRodzinka();
         startCountdownGtaPrawdziweZycie();
