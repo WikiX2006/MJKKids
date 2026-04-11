@@ -24,6 +24,7 @@
             --gta-orange: #ff6600;
             --gta-dark: #cc5200;
             --blog-purple: #8e44ad;
+            --blog-dark-purple: #6c3483;
             --photo-cyan: #00bcd4;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -36,15 +37,11 @@
         .stars-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
         .star { position: absolute; background: white; border-radius: 50%; animation: twinkle 3s infinite; }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-
-        /* Header */
         .series-header { position: fixed; top: 0; left: 0; right: 0; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%); }
         .series-logo { font-family: 'Bangers', cursive; font-size: 2.5rem; color: var(--text-white); cursor: pointer; }
         .series-logo span { color: var(--ninjago-yellow); }
         .sound-toggle { font-size: 1.5rem; cursor: pointer; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
         .sound-toggle:hover { background: rgba(255,255,255,0.2); }
-
-        /* Main Carousel */
         .main-carousel { position: relative; width: 100%; max-width: 1200px; margin: 100px auto 40px auto; padding: 0 80px; z-index: 10; }
         .carousel-container { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
         .carousel-slide { display: none; position: relative; aspect-ratio: 16/9; background: linear-gradient(135deg, #c90000 0%, #580000 100%); }
@@ -62,8 +59,6 @@
         .carousel-indicators { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10; }
         .indicator { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: background 0.3s; }
         .indicator.active { background: var(--ninjago-yellow); }
-
-        /* Series Grid */
         .series-grid-section { position: relative; z-index: 10; max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
         .series-grid-title { font-family: 'Bangers', cursive; font-size: 2rem; color: var(--text-white); margin-bottom: 30px; text-align: center; }
         .series-grid { display: flex; gap: 20px; overflow-x: auto; padding: 20px 10px; scroll-behavior: smooth; scrollbar-width: none; }
@@ -74,15 +69,12 @@
         .series-card-icon { font-size: 3rem; margin-bottom: 10px; }
         .series-card-name { font-family: 'Bangers', cursive; font-size: 1.2rem; color: var(--text-white); text-transform: uppercase; }
         .series-card-arrow { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: rgba(0, 102, 204, 0.8); border: none; border-radius: 50%; cursor: pointer; color: #fff; font-size: 1.2rem; z-index: 20; }
-
-        /* Bottom Navigation */
         .bottom-nav-bar { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.95); border-radius: 50px; padding: 15px 40px; display: flex; gap: 30px; z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
         .nav-icon { font-size: 1.5rem; color: #666; cursor: pointer; transition: color 0.3s, transform 0.3s; display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .nav-icon span { font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
         .nav-icon:hover, .nav-icon.active { color: var(--space-blue); transform: scale(1.2); }
         .legal-stuff { position: fixed; bottom: 10px; right: 10px; font-size: 0.8rem; color: rgba(255,255,255,0.5); cursor: pointer; z-index: 1000; }
         .legal-stuff:hover { color: var(--text-white); }
-
         @media (max-width: 768px) {
             .carousel-title { font-size: 2.5rem; }
             .series-card { flex: 0 0 120px; height: 180px; }
@@ -90,9 +82,31 @@
             .nav-icon span { font-size: 0.65rem; }
         }
 
-        /* Pages visibility */
-        .ninjago-page, .minecraft-page, .wikix-page, .gta-page, .minecraft-super-szkola-page, .gta-prawdziwe-zycie-page, .minecraft-rodzinka-page, .series-page, .games-page, .szczecin-page { display: none; background-color: var(--bg-black); }
-        .ninjago-page.active, .minecraft-page.active, .wikix-page.active, .gta-page.active, .minecraft-super-szkola-page.active, .gta-prawdziwe-zycie-page.active, .minecraft-rodzinka-page.active, .series-page.active, .games-page.active, .szczecin-page.active { display: block; }
+        /* Pages visibility - UPDATED WITH BLOG */
+        .ninjago-page, .minecraft-page, .wikix-page, .gta-page, .minecraft-super-szkola-page, .gta-prawdziwe-zycie-page, .minecraft-rodzinka-page, .series-page, .games-page, .szczecin-page, .blog-page { display: none; background-color: var(--bg-black); }
+        .ninjago-page.active, .minecraft-page.active, .wikix-page.active, .gta-page.active, .minecraft-super-szkola-page.active, .gta-prawdziwe-zycie-page.active, .minecraft-rodzinka-page.active, .series-page.active, .games-page.active, .szczecin-page.active, .blog-page.active { display: block; }
+
+        /* BLOG PAGE STYLES */
+        .blog-page { min-height: 100vh; background: linear-gradient(180deg, #8e44ad 0%, #6c3483 50%, #4a235a 100%); padding: 100px 20px 120px 20px; }
+        .blog-header { text-align: center; margin-bottom: 50px; }
+        .blog-title { font-family: 'Bangers', cursive; font-size: 5rem; color: var(--text-white); text-transform: uppercase; margin-bottom: 20px; text-shadow: 3px 3px 0 #000; }
+        .blog-subtitle { font-size: 1.5rem; color: rgba(255,255,255,0.9); font-weight: 300; }
+        .blog-posts-container { max-width: 1000px; margin: 0 auto; }
+        .blog-post { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 30px; margin-bottom: 30px; border: 2px solid rgba(255,255,255,0.2); transition: transform 0.3s, box-shadow 0.3s; }
+        .blog-post:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
+        .blog-post-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .blog-post-icon { font-size: 3rem; }
+        .blog-post-meta { flex: 1; }
+        .blog-post-title { font-family: 'Bangers', cursive; font-size: 2rem; color: var(--ninjago-yellow); margin-bottom: 5px; }
+        .blog-post-date { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+        .blog-post-content { color: rgba(255,255,255,0.9); line-height: 1.6; font-size: 1.1rem; margin-bottom: 20px; }
+        .blog-post-image { width: 100%; height: 300px; background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%); border-radius: 15px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .blog-post-image img { width: 100%; height: 100%; object-fit: cover; }
+        .blog-post-placeholder { font-size: 4rem; color: rgba(255,255,255,0.5); }
+        .blog-read-more { display: inline-block; padding: 10px 25px; background: var(--ninjago-yellow); color: #000; font-family: 'Bangers', cursive; font-size: 1.1rem; border: none; border-radius: 50px; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+        .blog-read-more:hover { transform: scale(1.05); box-shadow: 0 5px 20px rgba(255, 204, 0, 0.4); }
+        .blog-back-btn { position: fixed; bottom: 100px; right: 30px; padding: 15px 30px; background: var(--ninjago-yellow); color: #000; font-family: 'Bangers', cursive; font-size: 1.2rem; border: none; border-radius: 50px; cursor: pointer; z-index: 1000; transition: transform 0.3s, box-shadow 0.3s; }
+        .blog-back-btn:hover { transform: scale(1.05); box-shadow: 0 5px 20px rgba(255, 204, 0, 0.4); }
 
         /* SZCZECIN 2026 PAGE */
         .szczecin-page { min-height: 100vh; background: linear-gradient(180deg, #00bcd4 0%, #0097a7 50%, #006677 100%); padding: 100px 20px 120px 20px; }
@@ -348,7 +362,74 @@
         <div class="legal-stuff" onclick="alert('Informacje prawne')">Legal stuff</div>
     </main>
 
-    <!-- SZCZECIN 2026 PAGE - 15 ZDJĘĆ BEZ PODPISÓW -->
+    <!-- BLOG PAGE - NOWA STRONA -->
+    <main id="blog-page" class="blog-page">
+        <div class="blog-header">
+            <h1 class="blog-title">MJK BLOG</h1>
+            <p class="blog-subtitle">Aktualności, przemyślenia i historie z życia MJKKids</p>
+        </div>
+        <div class="blog-posts-container">
+            <article class="blog-post">
+                <div class="blog-post-header">
+                    <div class="blog-post-icon">📝</div>
+                    <div class="blog-post-meta">
+                        <h2 class="blog-post-title">Nowy sezon Ninjago już wkrótce!</h2>
+                        <div class="blog-post-date">10 kwietnia 2026</div>
+                    </div>
+                </div>
+                <div class="blog-post-image"><div class="blog-post-placeholder">🥷</div></div>
+                <div class="blog-post-content">
+                    <p>Z wielką radością informujemy, że nowy sezon Ninjago - "Nowa Generacja" już wkrótce pojawi się na naszym kanale! Przygotowaliśmy dla Was niesamowite przygody, nowych bohaterów i jeszcze więcej akcji. Nie możecie tego przegapić!</p>
+                </div>
+                <button class="blog-read-more" onclick="alert('Pełny artykuł wkrótce!')">Czytaj więcej →</button>
+            </article>
+            <article class="blog-post">
+                <div class="blog-post-header">
+                    <div class="blog-post-icon">📹</div>
+                    <div class="blog-post-meta">
+                        <h2 class="blog-post-title">Vlog z Szczecina - relacja na żywo</h2>
+                        <div class="blog-post-date">5 kwietnia 2026</div>
+                    </div>
+                </div>
+                <div class="blog-post-image"><div class="blog-post-placeholder">🏙️</div></div>
+                <div class="blog-post-content">
+                    <p>Właśnie wróciliśmy z niesamowitej podróży do Szczecina! Przez cały tydzień nagrywaliśmy dla Was materiały do nowego sezonu vloga. Zobaczcie co nas tam spotkało i jakie przygody przeżyliśmy w tym pięknym mieście.</p>
+                </div>
+                <button class="blog-read-more" onclick="alert('Pełny artykuł wkrótce!')">Czytaj więcej →</button>
+            </article>
+            <article class="blog-post">
+                <div class="blog-post-header">
+                    <div class="blog-post-icon">⛏️</div>
+                    <div class="blog-post-meta">
+                        <h2 class="blog-post-title">Minecraft Super Szkoła - nowe odcinki</h2>
+                        <div class="blog-post-date">1 kwietnia 2026</div>
+                    </div>
+                </div>
+                <div class="blog-post-image"><div class="blog-post-placeholder">🏫</div></div>
+                <div class="blog-post-content">
+                    <p>Rozpoczynamy nowy rozdział w Minecraft Super Szkoła! Tym razem przenosimy się do zupełnie nowego świata, gdzie czeka na nas mnóstwo wyzwań i przygód. Dołączcie do nas w tej edukacyjnej podróży!</p>
+                </div>
+                <button class="blog-read-more" onclick="alert('Pełny artykuł wkrótce!')">Czytaj więcej →</button>
+            </article>
+            <article class="blog-post">
+                <div class="blog-post-header">
+                    <div class="blog-post-icon">🚗</div>
+                    <div class="blog-post-meta">
+                        <h2 class="blog-post-title">GTA Prawdziwe Życie - sezon 2026</h2>
+                        <div class="blog-post-date">25 marca 2026</div>
+                    </div>
+                </div>
+                <div class="blog-post-image"><div class="blog-post-placeholder">🌆</div></div>
+                <div class="blog-post-content">
+                    <p>Nowy sezon GTA Prawdziwe Życie już dostępny! Odkrywajcie z nami Los Santos, poznawajcie nowych postaci i przeżywajcie niesamowite przygody w świecie GTA V. To będzie najlepszy sezon do tej pory!</p>
+                </div>
+                <button class="blog-read-more" onclick="alert('Pełny artykuł wkrótce!')">Czytaj więcej →</button>
+            </article>
+        </div>
+        <button class="blog-back-btn" onclick="showSeriesSelection()">← POWRÓT</button>
+    </main>
+
+    <!-- SZCZECIN 2026 PAGE -->
     <main id="szczecin-page" class="szczecin-page">
         <div class="szczecin-header">
             <h1 class="szczecin-title">SZCZECIN 2026</h1>
@@ -530,10 +611,34 @@
         function goToSlide(index) { slides[currentSlide].classList.remove('active'); indicators[currentSlide].classList.remove('active'); document.querySelectorAll('.carousel-video').forEach(video => { video.pause(); }); currentSlide = index; slides[currentSlide].classList.add('active'); indicators[currentSlide].classList.add('active'); const activeVideo = slides[currentSlide].querySelector('.carousel-video'); if (activeVideo) { activeVideo.play(); } }
         setInterval(() => { changeSlide(1); }, 5000);
         function scrollGrid(amount, gridId = 'seriesGrid') { document.getElementById(gridId).scrollBy({ left: amount, behavior: 'smooth' }); }
-        function showSeriesSelection() { document.getElementById('series-selection').style.display = 'block'; document.getElementById('ninjago-page').classList.remove('active'); document.getElementById('minecraft-page').classList.remove('active'); document.getElementById('wikix-page').classList.remove('active'); document.getElementById('gta-page').classList.remove('active'); document.getElementById('minecraft-super-szkola-page').classList.remove('active'); document.getElementById('minecraft-rodzinka-page').classList.remove('active'); document.getElementById('gta-prawdziwe-zycie-page').classList.remove('active'); document.getElementById('series-page').classList.remove('active'); document.getElementById('games-page').classList.remove('active'); document.getElementById('szczecin-page').classList.remove('active'); window.scrollTo(0, 0); }
+        
+        // UPDATED: showSeriesSelection - includes blog-page
+        function showSeriesSelection() { 
+            document.getElementById('series-selection').style.display = 'block'; 
+            document.getElementById('ninjago-page').classList.remove('active'); 
+            document.getElementById('minecraft-page').classList.remove('active'); 
+            document.getElementById('wikix-page').classList.remove('active'); 
+            document.getElementById('gta-page').classList.remove('active'); 
+            document.getElementById('minecraft-super-szkola-page').classList.remove('active'); 
+            document.getElementById('minecraft-rodzinka-page').classList.remove('active'); 
+            document.getElementById('gta-prawdziwe-zycie-page').classList.remove('active'); 
+            document.getElementById('series-page').classList.remove('active'); 
+            document.getElementById('games-page')?.classList.remove('active'); 
+            document.getElementById('szczecin-page').classList.remove('active'); 
+            document.getElementById('blog-page').classList.remove('active'); // <-- ADDED
+            window.scrollTo(0, 0); 
+        }
+        
         function showSeriesPage() { document.getElementById('series-selection').style.display = 'none'; document.getElementById('series-page').classList.add('active'); window.scrollTo(0, 0); }
         function showSzczecin2026() { document.getElementById('series-selection').style.display = 'none'; document.getElementById('szczecin-page').classList.add('active'); window.scrollTo(0, 0); }
-        function showBlog() { alert('Strona Bloga - w przygotowaniu!'); }
+        
+        // UPDATED: showBlog - actually shows the blog page now!
+        function showBlog() { 
+            document.getElementById('series-selection').style.display = 'none'; 
+            document.getElementById('blog-page').classList.add('active'); 
+            window.scrollTo(0, 0); 
+        }
+        
         function showNinjago() { document.getElementById('series-selection').style.display = 'none'; document.getElementById('ninjago-page').classList.add('active'); window.scrollTo(0, 0); }
         function showMinecraft() { document.getElementById('series-selection').style.display = 'none'; document.getElementById('minecraft-page').classList.add('active'); window.scrollTo(0, 0); }
         function showMinecraftSuperSzkola() { document.getElementById('series-selection').style.display = 'none'; document.getElementById('minecraft-page').classList.remove('active'); document.getElementById('minecraft-super-szkola-page').classList.add('active'); window.scrollTo(0, 0); }
@@ -543,21 +648,106 @@
         function showGtaPrawdziweZycie() { document.getElementById('series-selection').style.display = 'none'; document.getElementById('gta-page').classList.remove('active'); document.getElementById('gta-prawdziwe-zycie-page').classList.add('active'); window.scrollTo(0, 0); }
         function openSearch() { const query = prompt("Czego szukasz? (np. Ninjago, Minecraft, Vlog)"); if (query) { alert(`Szukam: "${query}"... (Funkcja w przygotowaniu)`); } }
         function toggleSound() { alert('Dźwięk włączony/wyłączony'); }
-        function showPremiereInfo(type) { const modal = document.getElementById('premiereModal'); const logo = document.getElementById('premiereModalLogo'); const title = document.getElementById('premiereSeriesTitle'); const country = document.getElementById('premiereCountry'); const language = document.getElementById('premiereLanguage'); const station = document.getElementById('premiereStation'); const typeEl = document.getElementById('premiereType'); const tableBody = document.getElementById('premiereTableBody'); const tableHeader = document.getElementById('premiereTableHeader'); let seriesData = {}; if (type === 'nowa-generacja') { logo.textContent = 'NINJAGO'; seriesData = { title: 'Ninjago Nowa Generacja - Sezon 2', country: 'Polska 🇵', language: 'Polski (dubbing)', station: 'Kanał YouTube WikiXa', type: 'Animacja', dates: [{ month: 'Maj 2026', date: '2 maja 2026', time: '16:00' }, { month: 'Maj 2026', date: '9 maja 2026', time: '16:00' }, { month: 'Maj 2026', date: '16 maja 2026', time: '16:00' }, { month: 'Maj 2026', date: '23 maja 2026', time: '16:00' }] }; } else if (type === 'polaczeni') { logo.textContent = 'NINJAGO'; seriesData = { title: 'Ninjago Połączeni - Sezon 1', country: 'Polska 🇵🇱', language: 'Polski (dubbing)', station: 'Kanał YouTube WikiXa', type: 'Animacja', dates: [{ month: 'Maj 2026', date: '25 maja 2026', time: '17:00' }, { month: 'Czerwiec 2026', date: '1 czerwca 2026', time: '17:00' }, { month: 'Czerwiec 2026', date: '8 czerwca 2026', time: '17:00' }, { month: 'Czerwiec 2026', date: '15 czerwca 2026', time: '17:00' }] }; } else if (type === 'wikix') { logo.textContent = 'WIKIX VLOG'; seriesData = { title: 'WikiX Vlog - Sezon 2026', country: 'Polska 🇵', language: 'Polski', station: 'Kanał YouTube WikiXa', type: 'Vlog', dates: [{ month: 'Kwiecień 2026', date: '10 kwietnia 2026', language: 'Polski 🇵', time: '17:00' }, { month: 'Kwiecień 2026', date: '11 kwietnia 2026', language: 'Niemiecki 🇩', time: '19:00' }, { month: 'Kwiecień 2026', date: '12 kwietnia 2026', language: 'Francuski 🇫', time: '19:00' }, { month: 'Kwiecień 2026', date: '13 kwietnia 2026', language: 'Hiszpański 🇪', time: '19:00' }] }; } else if (type === 'minecraft-super-szkola') { logo.textContent = 'MINECRAFT'; seriesData = { title: 'Minecraft Super Szkoła - Sezon 3 Część 2', country: 'Polska 🇵🇱', language: 'Polski', station: 'Kanał YouTube WikiXa', type: 'Edukacja/Gry', dates: [{ month: 'Maj 2026', date: '5 maja 2026', time: '15:00' }] }; } else if (type === 'minecraft-rodzinka') { logo.textContent = 'MINECRAFT'; seriesData = { title: 'Minecraft Rodzinka - Sezon 2026', country: 'Polska 🇵🇱', language: 'Polski', station: 'Kanał YouTube WikiXa', type: 'Gry/Rodzina', dates: [{ month: 'Maj 2026', date: '15 maja 2026', time: '15:00' }] }; } else if (type === 'gta-prawdziwe-zycie') { logo.textContent = 'GTA'; seriesData = { title: 'GTA V Prawdziwe Życie - Sezon 2026', country: 'Polska 🇵🇱', language: 'Polski', station: 'Kanał YouTube WikiXa', type: 'Gry', dates: [{ month: 'Maj 2026', date: '10 maja 2026', time: '16:00' }] }; } title.textContent = seriesData.title; country.textContent = seriesData.country; language.textContent = seriesData.language; station.textContent = seriesData.station; typeEl.textContent = seriesData.type; if (type === 'wikix') { tableHeader.innerHTML = `<th>Miesiąc</th><th>Data premiery</th><th>Język</th><th>Godzina</th>`; } else { tableHeader.innerHTML = `<th>Miesiąc</th><th>Data premiery</th><th>Godzina</th>`; } tableBody.innerHTML = ''; seriesData.dates.forEach(item => { const row = document.createElement('tr'); if (type === 'wikix') { row.innerHTML = `<td>${item.month}</td><td>${item.date}</td><td>${item.language}</td><td>${item.time}</td>`; } else { row.innerHTML = `<td>${item.month}</td><td>${item.date}</td><td>${item.time}</td>`; } tableBody.appendChild(row); }); modal.classList.add('active'); }
+        
+        function showPremiereInfo(type) { 
+            const modal = document.getElementById('premiereModal'); 
+            const logo = document.getElementById('premiereModalLogo'); 
+            const title = document.getElementById('premiereSeriesTitle'); 
+            const country = document.getElementById('premiereCountry'); 
+            const language = document.getElementById('premiereLanguage'); 
+            const station = document.getElementById('premiereStation'); 
+            const typeEl = document.getElementById('premiereType'); 
+            const tableBody = document.getElementById('premiereTableBody'); 
+            const tableHeader = document.getElementById('premiereTableHeader'); 
+            let seriesData = {}; 
+            if (type === 'nowa-generacja') { 
+                logo.textContent = 'NINJAGO'; 
+                seriesData = { title: 'Ninjago Nowa Generacja - Sezon 2', country: 'Polska 🇵🇱', language: 'Polski (dubbing)', station: 'Kanał YouTube WikiXa', type: 'Animacja', dates: [{ month: 'Maj 2026', date: '2 maja 2026', time: '16:00' }, { month: 'Maj 2026', date: '9 maja 2026', time: '16:00' }, { month: 'Maj 2026', date: '16 maja 2026', time: '16:00' }, { month: 'Maj 2026', date: '23 maja 2026', time: '16:00' }] }; 
+            } else if (type === 'polaczeni') { 
+                logo.textContent = 'NINJAGO'; 
+                seriesData = { title: 'Ninjago Połączeni - Sezon 1', country: 'Polska 🇵🇱', language: 'Polski (dubbing)', station: 'Kanał YouTube WikiXa', type: 'Animacja', dates: [{ month: 'Maj 2026', date: '25 maja 2026', time: '17:00' }, { month: 'Czerwiec 2026', date: '1 czerwca 2026', time: '17:00' }, { month: 'Czerwiec 2026', date: '8 czerwca 2026', time: '17:00' }, { month: 'Czerwiec 2026', date: '15 czerwca 2026', time: '17:00' }] }; 
+            } else if (type === 'wikix') { 
+                logo.textContent = 'WIKIX VLOG'; 
+                seriesData = { title: 'WikiX Vlog - Sezon 2026', country: 'Polska 🇵🇱', language: 'Polski', station: 'Kanał YouTube WikiXa', type: 'Vlog', dates: [{ month: 'Kwiecień 2026', date: '10 kwietnia 2026', language: 'Polski 🇵🇱', time: '17:00' }, { month: 'Kwiecień 2026', date: '11 kwietnia 2026', language: 'Niemiecki 🇩🇪', time: '19:00' }, { month: 'Kwiecień 2026', date: '12 kwietnia 2026', language: 'Francuski 🇫🇷', time: '19:00' }, { month: 'Kwiecień 2026', date: '13 kwietnia 2026', language: 'Hiszpański 🇪🇸', time: '19:00' }] }; 
+            } else if (type === 'minecraft-super-szkola') { 
+                logo.textContent = 'MINECRAFT'; 
+                seriesData = { title: 'Minecraft Super Szkoła - Sezon 3 Część 2', country: 'Polska 🇵🇱', language: 'Polski', station: 'Kanał YouTube WikiXa', type: 'Edukacja/Gry', dates: [{ month: 'Maj 2026', date: '5 maja 2026', time: '15:00' }] }; 
+            } else if (type === 'minecraft-rodzinka') { 
+                logo.textContent = 'MINECRAFT'; 
+                seriesData = { title: 'Minecraft Rodzinka - Sezon 2026', country: 'Polska 🇵🇱', language: 'Polski', station: 'Kanał YouTube WikiXa', type: 'Gry/Rodzina', dates: [{ month: 'Maj 2026', date: '15 maja 2026', time: '15:00' }] }; 
+            } else if (type === 'gta-prawdziwe-zycie') { 
+                logo.textContent = 'GTA'; 
+                seriesData = { title: 'GTA V Prawdziwe Życie - Sezon 2026', country: 'Polska 🇵🇱', language: 'Polski', station: 'Kanał YouTube WikiXa', type: 'Gry', dates: [{ month: 'Maj 2026', date: '10 maja 2026', time: '16:00' }] }; 
+            } 
+            title.textContent = seriesData.title; 
+            country.textContent = seriesData.country; 
+            language.textContent = seriesData.language; 
+            station.textContent = seriesData.station; 
+            typeEl.textContent = seriesData.type; 
+            if (type === 'wikix') { 
+                tableHeader.innerHTML = `<th>Miesiąc</th><th>Data premiery</th><th>Język</th><th>Godzina</th>`; 
+            } else { 
+                tableHeader.innerHTML = `<th>Miesiąc</th><th>Data premiery</th><th>Godzina</th>`; 
+            } 
+            tableBody.innerHTML = ''; 
+            seriesData.dates.forEach(item => { 
+                const row = document.createElement('tr'); 
+                if (type === 'wikix') { 
+                    row.innerHTML = `<td>${item.month}</td><td>${item.date}</td><td>${item.language}</td><td>${item.time}</td>`; 
+                } else { 
+                    row.innerHTML = `<td>${item.month}</td><td>${item.date}</td><td>${item.time}</td>`; 
+                } 
+                tableBody.appendChild(row); 
+            }); 
+            modal.classList.add('active'); 
+        }
         function closePremiereModal() { document.getElementById('premiereModal').classList.remove('active'); }
         document.getElementById('premiereModal').addEventListener('click', function(e) { if (e.target === this) { closePremiereModal(); } });
         document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { closePremiereModal(); } });
-        function playVideo(src, title = '') { const modal = document.getElementById('videoModal'); const video = document.getElementById('modalVideo'); const titleEl = document.getElementById('modalVideoTitle'); video.pause(); video.src = ''; video.load(); setTimeout(() => { video.src = src; video.load(); titleEl.textContent = title; modal.classList.add('active'); video.play().catch(e => { console.log('Oczekiwanie na kliknięcie play:', e); }); }, 50); }
-        function closeVideoModal() { const modal = document.getElementById('videoModal'); const video = document.getElementById('modalVideo'); video.pause(); video.src = ''; modal.classList.remove('active'); }
+        
+        function playVideo(src, title = '') { 
+            const modal = document.getElementById('videoModal'); 
+            const video = document.getElementById('modalVideo'); 
+            const titleEl = document.getElementById('modalVideoTitle'); 
+            video.pause(); video.src = ''; video.load(); 
+            setTimeout(() => { 
+                video.src = src; video.load(); 
+                titleEl.textContent = title; 
+                modal.classList.add('active'); 
+                video.play().catch(e => { console.log('Oczekiwanie na kliknięcie play:', e); }); 
+            }, 50); 
+        }
+        function closeVideoModal() { 
+            const modal = document.getElementById('videoModal'); 
+            const video = document.getElementById('modalVideo'); 
+            video.pause(); video.src = ''; 
+            modal.classList.remove('active'); 
+        }
         document.getElementById('videoModal').addEventListener('click', function(e) { if (e.target === this) { closeVideoModal(); } });
         document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { closeVideoModal(); } });
-        function downloadFile(url, filename) { const link = document.createElement('a'); link.href = url; link.download = filename; link.style.display = 'none'; document.body.appendChild(link); link.click(); document.body.removeChild(link); console.log('Pobieranie:', filename); }
+        
+        function downloadFile(url, filename) { 
+            const link = document.createElement('a'); 
+            link.href = url; link.download = filename; 
+            link.style.display = 'none'; 
+            document.body.appendChild(link); 
+            link.click(); 
+            document.body.removeChild(link); 
+            console.log('Pobieranie:', filename); 
+        }
+        
         function startCountdownNG() { const countDownDate = new Date("May 2, 2026 00:00:00").getTime(); setInterval(function() { const now = new Date().getTime(); const distance = countDownDate - now; const days = Math.floor(distance / (1000 * 60 * 60 * 24)); const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)); const seconds = Math.floor((distance % (1000 * 60)) / 1000); document.getElementById("ng-days").innerHTML = days < 10 ? "0" + days : days; document.getElementById("ng-hours").innerHTML = hours < 10 ? "0" + hours : hours; document.getElementById("ng-mins").innerHTML = minutes < 10 ? "0" + minutes : minutes; document.getElementById("ng-secs").innerHTML = seconds < 10 ? "0" + seconds : seconds; }, 1000); }
         function startCountdownNP() { const countDownDate = new Date("May 25, 2026 00:00:00").getTime(); setInterval(function() { const now = new Date().getTime(); const distance = countDownDate - now; const days = Math.floor(distance / (1000 * 60 * 60 * 24)); const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)); const seconds = Math.floor((distance % (1000 * 60)) / 1000); document.getElementById("np-days").innerHTML = days < 10 ? "0" + days : days; document.getElementById("np-hours").innerHTML = hours < 10 ? "0" + hours : hours; document.getElementById("np-mins").innerHTML = minutes < 10 ? "0" + minutes : minutes; document.getElementById("np-secs").innerHTML = seconds < 10 ? "0" + seconds : seconds; }, 1000); }
         function startCountdownMinecraftSuperSzkola() { const countDownDate = new Date("May 5, 2026 15:00:00").getTime(); setInterval(function() { const now = new Date().getTime(); const distance = countDownDate - now; const days = Math.floor(distance / (1000 * 60 * 60 * 24)); const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)); const seconds = Math.floor((distance % (1000 * 60)) / 1000); document.getElementById("mss-days").innerHTML = days < 10 ? "0" + days : days; document.getElementById("mss-hours").innerHTML = hours < 10 ? "0" + hours : hours; document.getElementById("mss-mins").innerHTML = minutes < 10 ? "0" + minutes : minutes; document.getElementById("mss-secs").innerHTML = seconds < 10 ? "0" + seconds : seconds; }, 1000); }
         function startCountdownMinecraftRodzinka() { const countDownDate = new Date("May 15, 2026 15:00:00").getTime(); setInterval(function() { const now = new Date().getTime(); const distance = countDownDate - now; const days = Math.floor(distance / (1000 * 60 * 60 * 24)); const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)); const seconds = Math.floor((distance % (1000 * 60)) / 1000); document.getElementById("mr-days").innerHTML = days < 10 ? "0" + days : days; document.getElementById("mr-hours").innerHTML = hours < 10 ? "0" + hours : hours; document.getElementById("mr-mins").innerHTML = minutes < 10 ? "0" + minutes : minutes; document.getElementById("mr-secs").innerHTML = seconds < 10 ? "0" + seconds : seconds; }, 1000); }
         function startCountdownGtaPrawdziweZycie() { const countDownDate = new Date("May 10, 2026 16:00:00").getTime(); setInterval(function() { const now = new Date().getTime(); const distance = countDownDate - now; const days = Math.floor(distance / (1000 * 60 * 60 * 24)); const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)); const seconds = Math.floor((distance % (1000 * 60)) / 1000); document.getElementById("gpz-days").innerHTML = days < 10 ? "0" + days : days; document.getElementById("gpz-hours").innerHTML = hours < 10 ? "0" + hours : hours; document.getElementById("gpz-mins").innerHTML = minutes < 10 ? "0" + minutes : minutes; document.getElementById("gpz-secs").innerHTML = seconds < 10 ? "0" + seconds : seconds; }, 1000); }
-        createStars(); startCountdownNG(); startCountdownNP(); startCountdownMinecraftSuperSzkola(); startCountdownMinecraftRodzinka(); startCountdownGtaPrawdziweZycie();
+        
+        createStars(); 
+        startCountdownNG(); 
+        startCountdownNP(); 
+        startCountdownMinecraftSuperSzkola(); 
+        startCountdownMinecraftRodzinka(); 
+        startCountdownGtaPrawdziweZycie();
     </script>
 </body>
 </html>
