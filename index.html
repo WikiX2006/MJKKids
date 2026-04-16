@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -436,21 +437,9 @@
             <p class="szczecin-subtitle">Galeria zdjęć z miasta tegorocznego vloga</p>
         </div>
         <div class="szczecin-gallery">
-            <div class="szczecin-photo"><div class="szczecin-photo-placeholder">📷</div></div>
-            <div class="szczecin-photo"><div class="szczecin-photo-placeholder">📷</div></div>
-            <div class="szczecin-photo"><div class="szczecin-photo-placeholder">📷</div></div>
-            <div class="szczecin-photo"><div class="szczecin-photo-placeholder">📷</div></div>
-            <div class="szczecin-photo"><div class="szczecin-photo-placeholder">📷</div></div>
-            <div class="szczecin-photo"><div class="szczecin-photo-placeholder">📷</div></div>
-            <div class="szczecin-photo"><div class="szczecin-photo-placeholder">📷</div></div>
-            <div class="szczecin-photo"><div class="szczecin-photo-placeholder">📷</div></div>
-            <div class="szczecin-photo"><div class="szczecin-photo-placeholder">📷</div></div>
-            <div class="szczecin-photo"><div class="szczecin-photo-placeholder">📷</div></div>
-            <div class="szczecin-photo"><div class="szczecin-photo-placeholder">📷</div></div>
-            <div class="szczecin-photo"><div class="szczecin-photo-placeholder">📷</div></div>
-            <div class="szczecin-photo"><div class="szczecin-photo-placeholder">📷</div></div>
-            <div class="szczecin-photo"><div class="szczecin-photo-placeholder">📷</div></div>
-            <div class="szczecin-photo"><div class="szczecin-photo-placeholder">📷</div></div>
+            <div class="szczecin-photo">
+                <img src="img/wiki.jpg" alt="Plakat Szczecin 2026">
+            </div>
         </div>
         <button class="szczecin-back-btn" onclick="showSeriesSelection()">← POWRÓT</button>
     </main>
@@ -662,13 +651,13 @@
             let seriesData = {}; 
             if (type === 'nowa-generacja') { 
                 logo.textContent = 'NINJAGO'; 
-                seriesData = { title: 'Ninjago Nowa Generacja - Sezon 2', country: 'Polska 🇵🇱', language: 'Polski (dubbing)', station: 'Kanał YouTube WikiXa', type: 'Animacja', dates: [{ month: 'Maj 2026', date: '2 maja 2026', time: '16:00' }, { month: 'Maj 2026', date: '9 maja 2026', time: '16:00' }, { month: 'Maj 2026', date: '16 maja 2026', time: '16:00' }, { month: 'Maj 2026', date: '23 maja 2026', time: '16:00' }] }; 
+                seriesData = { title: 'Ninjago Nowa Generacja - Sezon 2', country: 'Polska 🇵', language: 'Polski (dubbing)', station: 'Kanał YouTube WikiXa', type: 'Animacja', dates: [{ month: 'Maj 2026', date: '2 maja 2026', time: '16:00' }, { month: 'Maj 2026', date: '9 maja 2026', time: '16:00' }, { month: 'Maj 2026', date: '16 maja 2026', time: '16:00' }, { month: 'Maj 2026', date: '23 maja 2026', time: '16:00' }] }; 
             } else if (type === 'polaczeni') { 
                 logo.textContent = 'NINJAGO'; 
-                seriesData = { title: 'Ninjago Połączeni - Sezon 1', country: 'Polska 🇵🇱', language: 'Polski (dubbing)', station: 'Kanał YouTube WikiXa', type: 'Animacja', dates: [{ month: 'Maj 2026', date: '25 maja 2026', time: '17:00' }, { month: 'Czerwiec 2026', date: '1 czerwca 2026', time: '17:00' }, { month: 'Czerwiec 2026', date: '8 czerwca 2026', time: '17:00' }, { month: 'Czerwiec 2026', date: '15 czerwca 2026', time: '17:00' }] }; 
+                seriesData = { title: 'Ninjago Połączeni - Sezon 1', country: 'Polska 🇵', language: 'Polski (dubbing)', station: 'Kanał YouTube WikiXa', type: 'Animacja', dates: [{ month: 'Maj 2026', date: '25 maja 2026', time: '17:00' }, { month: 'Czerwiec 2026', date: '1 czerwca 2026', time: '17:00' }, { month: 'Czerwiec 2026', date: '8 czerwca 2026', time: '17:00' }, { month: 'Czerwiec 2026', date: '15 czerwca 2026', time: '17:00' }] }; 
             } else if (type === 'wikix') { 
                 logo.textContent = 'WIKIX VLOG'; 
-                seriesData = { title: 'WikiX Vlog - Sezon 2026', country: 'Polska 🇵🇱', language: 'Polski', station: 'Kanał YouTube WikiXa', type: 'Vlog', dates: [{ month: 'Kwiecień 2026', date: '10 kwietnia 2026', language: 'Polski 🇵🇱', time: '17:00' }, { month: 'Kwiecień 2026', date: '11 kwietnia 2026', language: 'Niemiecki 🇩🇪', time: '19:00' }, { month: 'Kwiecień 2026', date: '12 kwietnia 2026', language: 'Francuski 🇫🇷', time: '19:00' }, { month: 'Kwiecień 2026', date: '13 kwietnia 2026', language: 'Hiszpański 🇪🇸', time: '19:00' }] }; 
+                seriesData = { title: 'WikiX Vlog - Sezon 2026', country: 'Polska 🇵🇱', language: 'Polski', station: 'Kanał YouTube WikiXa', type: 'Vlog', dates: [{ month: 'Kwiecień 2026', date: '10 kwietnia 2026', language: 'Polski 🇵', time: '17:00' }, { month: 'Kwiecień 2026', date: '11 kwietnia 2026', language: 'Niemiecki 🇩🇪', time: '19:00' }, { month: 'Kwiecień 2026', date: '12 kwietnia 2026', language: 'Francuski 🇫🇷', time: '19:00' }, { month: 'Kwiecień 2026', date: '13 kwietnia 2026', language: 'Hiszpański 🇪🇸', time: '19:00' }] }; 
             } else if (type === 'minecraft-super-szkola') { 
                 logo.textContent = 'MINECRAFT'; 
                 seriesData = { title: 'Minecraft Super Szkoła - Sezon 3 Część 2', country: 'Polska 🇵🇱', language: 'Polski', station: 'Kanał YouTube WikiXa', type: 'Edukacja/Gry', dates: [{ month: 'Maj 2026', date: '5 maja 2026', time: '15:00' }] }; 
